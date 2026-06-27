@@ -1,0 +1,13 @@
+﻿controle,nb_cas,action
+Colonnes supprimées,2,"Supprimé : ['B04', 'type_menage_collectif']"
+taille_menage aberrante,600,NaN (seuil = 99e percentile = 125)
+CM masculin déclaré épouse,10453,situation_matrimoniale_cm - NaN
+CM Étudiant >= 60 ans,26,Signalement
+Imputation taille_menage,1200,Médiane = 12.0 (skewness = 1.256)
+Imputation age_cm,39,Moyenne = 46.49 (skewness = 0.406)
+Imputation situation_matrimoniale_cm,10458,Mode = 'Monogame'
+Imputation sexe_cm,5,Mode = 'Masculin'
+Imputation statut_emploi_cm,5,Mode = 'Occupé'
+Saut questionnaire — niveau_etude_cm,37037,NaN → 'Non scolarisé' (question non posée)
+Saut questionnaire — branche_isic_cm,27315,NaN → 'Sans activité' (question non posée)
+Saut questionnaire — secteur_instit_cm,27315,NaN → 'Sans activité' (question non posée)

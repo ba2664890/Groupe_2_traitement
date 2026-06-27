@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QAQC - Table Ménage - RGPH-5</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f7faf7;
+      color: #2d3748;
+      line-height: 1.6;
+  }
+  .header {
+      background: linear-gradient(135deg, #1A4731 0%, #276749 60%, #38A169 100%);
+      color: white;
+      padding: 44px 52px;
+  }
+  .header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+  }
+  .header p { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+  .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 14px;
+      letter-spacing: 0.05em;
+  }
+  .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 44px 36px;
+  }
+  .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+  }
+  .card {
+      background: white;
+      border-radius: 12px;
+      padding: 26px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .footer {
+      text-align: center;
+      padding: 22px;
+      font-size: 12px;
+      color: #718096;
+      border-top: 1px solid #c6f6d5;
+      margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Rapport QAQC - Table Ménage</h1>
+    <p>5ème Recensement Général de la Population et de l'Habitat - Sénégal</p>
+    <p>Échantillon 1/10 de la base nationale</p>
+    <span class="badge">Groupe 2 - Pipeline de traitement</span>
+</div>
+
+<div class="container">
+
+    
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Vue d'ensemble</h2>
+        
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px;">
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #1A4731;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">Ménages traités</div>
+        <div style="font-size:22px;font-weight:800;color:#1A4731;">60,771</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #276749;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">Milieu urbain</div>
+        <div style="font-size:22px;font-weight:800;color:#276749;">62.1%</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #276749;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">Milieu rural</div>
+        <div style="font-size:22px;font-weight:800;color:#276749;">37.9%</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #2F855A;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">CM masculin</div>
+        <div style="font-size:22px;font-weight:800;color:#2F855A;">76.0%</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #2F855A;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">CM féminin</div>
+        <div style="font-size:22px;font-weight:800;color:#2F855A;">24.0%</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #38A169;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">Âge médian CM</div>
+        <div style="font-size:22px;font-weight:800;color:#38A169;">45 ans</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #48BB78;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">Taille médiane ménage</div>
+        <div style="font-size:22px;font-weight:800;color:#48BB78;">12</div>
+    </div>
+        
+    <div style="background:#ffffff;border-radius:10px;padding:20px 22px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.06);
+                border-left:4px solid #68D391;flex:1;min-width:160px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;
+                    color:#4a5568;font-weight:700;margin-bottom:6px;">Contrôles QAQC</div>
+        <div style="font-size:22px;font-weight:800;color:#68D391;">12</div>
+    </div>
+    </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Taille du ménage</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Indicateur</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Valeur</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Taille moyenne</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">26.55</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Taille médiane</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">12</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Écart-type</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">29.75</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Minimum</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Maximum</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">125</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1–2 membres</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7,358  (12.1%)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3–5 membres</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">9,521  (15.7%)</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">6–10 membres</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">11,100  (18.3%)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">11–20 membres</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10,174  (16.7%)</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">21–50 membres</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">9,523  (15.7%)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Plus de 50 membres</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">13,095  (21.5%)</td></tr></tbody>
+    </table>
+    </div>
+        </div>
+        <div class="card">
+            
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Âge du chef de ménage</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Indicateur</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Valeur</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Âge moyen</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">46.5 ans</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Âge médian</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">45 ans</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Écart-type</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">14.3 ans</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Minimum</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10 ans</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Maximum</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">110 ans</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Moins de 25 ans</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2,321  (3.8%)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">25–34 ans</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10,758  (17.7%)</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">35–44 ans</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">16,378  (27.0%)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">45–54 ans</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">13,897  (22.9%)</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">55–64 ans</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">9,838  (16.2%)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">65 ans et plus</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7,579  (12.5%)</td></tr></tbody>
+    </table>
+    </div>
+        </div>
+    </div><br>
+
+    <div class="grid-2">
+        <div class="card">
+            
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Sexe du CM</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Masculin</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">46188</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">76.0</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Féminin</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">14583</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">24.0</td></tr></tbody>
+    </table>
+    </div>
+        </div>
+        <div class="card">
+            
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Milieu de résidence</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Urbain</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">37763</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">62.14</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Rural</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">23008</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">37.86</td></tr></tbody>
+    </table>
+    </div>
+        </div>
+    </div><br>
+
+    <div class="card">
+        
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Niveau d'études du CM</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Non scolarisé</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">37037</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">60.95</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Aucun</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">8950</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">14.73</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">CFEE/CEPE</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4490</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7.39</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">DFEM/BFEM</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3556</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5.85</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">BAC</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2937</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4.83</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Licence</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1405</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2.31</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Master</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">747</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1.23</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Maîtrise</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">667</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1.1</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Doctorat</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">258</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.42</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">BTS</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">140</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.23</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">DUEL/DEUG</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">139</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.23</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">CAP</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">134</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.22</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Diplôme ingénieur</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">89</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.15</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">DEA/DESS</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">83</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.14</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">BT</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">39</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.06</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">BEP/BEPC</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">38</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.06</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">DUT</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">32</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.05</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">DTS</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">23</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.04</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">BP</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.01</td></tr></tbody>
+    </table>
+    </div>
+    </div><br>
+
+    <div class="grid-2">
+        <div class="card">
+            
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Situation matrimoniale du CM</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Monogame</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">46079</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">75.82</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Célibataire</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5852</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">9.63</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Veuf/Veuve</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3318</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5.46</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Polygame – 1ère épouse</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2636</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4.34</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Polygame – 2ème épouse</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1296</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2.13</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Divorcé(e)</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1155</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1.9</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Polygame – 3ème épouse</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">249</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.41</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Séparé(e)</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">73</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.12</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Polygame – 4ème épouse</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">62</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.1</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Union libre</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">44</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.07</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Polygame – 5ème épouse ou +</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.01</td></tr></tbody>
+    </table>
+    </div>
+        </div>
+        <div class="card">
+            
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Statut d'emploi du CM</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Occupé</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">31853</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">52.41</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">À la recherche d'un premier emploi</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">8203</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">13.5</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Autres inactifs</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">6962</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">11.46</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Occupé au foyer</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4603</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7.57</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Personne du 3e âge non pensionnée</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3590</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5.91</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Chômeur ayant déjà travaillé</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1608</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2.65</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Pensionné (FNR ou IPRES)</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1578</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2.6</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Rentier</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1303</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2.14</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Étudiant/Élève</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1071</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1.76</td></tr></tbody>
+    </table>
+    </div>
+        </div>
+    </div><br>
+
+    <div class="card">
+        
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Secteur d'activité du CM (ISIC Rev 4)</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Sans activité</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">27315</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">44.95</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Informel</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">16414</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">27.01</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Public</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10292</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">16.94</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Privé formel</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">6666</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10.97</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">ISBLSM (ONG, ASC, Fondations…)</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">84</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.14</td></tr></tbody>
+    </table>
+    </div>
+    </div><br>
+
+    <div class="card">
+        
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Distribution par région</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Modalité</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Effectif</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Proportion (%)</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">22429</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">36.91</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">7159</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">11.78</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4079</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">6.71</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3801</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">6.25</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">8</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3418</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5.62</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">6</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3208</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5.28</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2681</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4.41</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">9</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2571</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4.23</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">11</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2517</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4.14</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2437</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">4.01</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2251</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3.7</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">12</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1998</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">3.29</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">14</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1521</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2.5</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">13</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">701</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1.15</td></tr></tbody>
+    </table>
+    </div>
+    </div><br>
+
+    <div class="card">
+        
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Qualité des données - Valeurs manquantes</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Variable</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Nb manquants</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Taux (%)</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">Statut</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">A09</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">595</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.98</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Faible < 5%</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">A06</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">region</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">departement</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">commune</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">milieu</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">type_menage</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">taille_menage</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">age_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">sexe_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">niveau_etude_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">situation_matrimoniale_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">statut_emploi_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">branche_isic_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">secteur_instit_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">0.0</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Complet</td></tr></tbody>
+    </table>
+    </div>
+    </div><br>
+
+    <div class="card">
+        
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Log des corrections QAQC</h2>
+        
+    <table style="width:100%;border-collapse:collapse;border-radius:8px;
+                  overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <thead><tr><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">controle</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">nb_cas</th><th style="padding:12px 14px;text-align:left;font-weight:600;color:#ffffff;background:#276749;letter-spacing:0.03em;">action</th></tr></thead>
+        <tbody><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Colonnes supprimées</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">2</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Supprimé : ['B04', 'type_menage_collectif']</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">taille_menage aberrante</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">600</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">NaN (seuil = 99e percentile = 125)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">CM masculin déclaré épouse</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10453</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">situation_matrimoniale_cm - NaN</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">CM Étudiant >= 60 ans</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">26</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Signalement</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Imputation taille_menage</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">1200</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Médiane = 12.0 (skewness = 1.256)</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Imputation age_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">39</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Moyenne = 46.49 (skewness = 0.406)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Imputation situation_matrimoniale_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">10458</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Mode = 'Monogame'</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Imputation sexe_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Mode = 'Masculin'</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Imputation statut_emploi_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">5</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Mode = 'Occupé'</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Saut questionnaire — niveau_etude_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">37037</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">NaN → 'Non scolarisé' (question non posée)</td></tr><tr style="background:#f0fff4;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Saut questionnaire — branche_isic_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">27315</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">NaN → 'Sans activité' (question non posée)</td></tr><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">Saut questionnaire — secteur_instit_cm</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">27315</td><td style="padding:10px 14px;border-bottom:1px solid #c6f6d5;color:#1c3829;">NaN → 'Sans activité' (question non posée)</td></tr></tbody>
+    </table>
+    </div>
+    </div><br>
+
+    <div class="card">
+        
+    <div style="margin-bottom:32px;">
+        <h2 style="font-size:13px;font-weight:700;color:#1A4731;
+                   text-transform:uppercase;letter-spacing:0.07em;
+                   border-bottom:2px solid #276749;padding-bottom:7px;
+                   margin-bottom:14px;">Notes méthodologiques - Décisions de traitement</h2>
+        
+    <div style="margin-bottom:24px;border-radius:8px;overflow:hidden;
+                box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <div style="background:#276749;color:#ffffff;padding:10px 16px;
+                    font-size:12px;font-weight:700;letter-spacing:0.05em;
+                    text-transform:uppercase;">Clé d'identification du ménage</div>
+        
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Problème identifié</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">La variable A09 (N° ménage) ne contient que 78 valeurs uniques - insuffisant pour identifier un ménage de façon unique dans la base nationale.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Solution retenue</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Utilisation d'une clé composite A06 + A09 (district + numéro ménage), donnant 60 411 ménages uniques identifiables.</div>
+    </div>
+    </div>
+    <div style="margin-bottom:24px;border-radius:8px;overflow:hidden;
+                box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <div style="background:#276749;color:#ffffff;padding:10px 16px;
+                    font-size:12px;font-weight:700;letter-spacing:0.05em;
+                    text-transform:uppercase;">Traitement des valeurs aberrantes</div>
+        
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Âge du CM</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Bornes définies : [0, 120] ans. Toute valeur hors de ces bornes est remplacée par NaN.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Taille du ménage</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Seuil fixé au 99e percentile observé = 125 membres. Valeurs > 125 remplacées par NaN. Distribution observée : P50=12, P75=46, P90=78, P99=125, max=2182 (aberrant).</div>
+    </div>
+    </div>
+    <div style="margin-bottom:24px;border-radius:8px;overflow:hidden;
+                box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <div style="background:#276749;color:#ffffff;padding:10px 16px;
+                    font-size:12px;font-weight:700;letter-spacing:0.05em;
+                    text-transform:uppercase;">Contrôles de cohérence</div>
+        
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Sexe vs situation matrimoniale</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Un CM masculin ne peut pas être déclaré épouse en polygamie. 10 453 cas détectés - situation_matrimoniale_cm mis à NaN.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Âge vs statut étudiant</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">CM déclaré Étudiant/Élève avec âge ≥ 60 ans : 26 cas. Signalement dans le log sans correction automatique.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Âge vs retraite</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">CM déclaré Pensionné avec âge < 45 ans : signalement uniquement. Seuil conservateur intégrant les retraites militaires anticipées.</div>
+    </div>
+    </div>
+    <div style="margin-bottom:24px;border-radius:8px;overflow:hidden;
+                box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <div style="background:#276749;color:#ffffff;padding:10px 16px;
+                    font-size:12px;font-weight:700;letter-spacing:0.05em;
+                    text-transform:uppercase;">Imputation des valeurs manquantes</div>
+        
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Méthode de décision</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Test de symétrie (skewness) pour les variables quantitatives. Règle : skewness ∈ [-0.5, 0.5] - moyenne ; sinon - médiane.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">taille_menage - Médiane = 12</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Skewness = 1.256 (très asymétrique à droite). La moyenne (26.85) est gonflée par les grands ménages. La médiane est plus représentative.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">age_cm - Moyenne = 46.49 ans</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Skewness = 0.406 (quasi-symétrique). Moyenne et médiane proches (46.5 vs 45 ans).</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">Variables qualitatives</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">Imputation par le mode : situation_matrimoniale_cm - 'Monogame', sexe_cm - 'Masculin', statut_emploi_cm - 'Occupé'.</div>
+    </div>
+    </div>
+    <div style="margin-bottom:24px;border-radius:8px;overflow:hidden;
+                box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <div style="background:#276749;color:#ffffff;padding:10px 16px;
+                    font-size:12px;font-weight:700;letter-spacing:0.05em;
+                    text-transform:uppercase;">Sauts de questionnaire</div>
+        
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">niveau_etude_cm - 'Non scolarisé'</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">B33 non posée aux CM jamais scolarisés (B29 = 0). 37 037 NaN - 'Non scolarisé'.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">branche_isic_cm et secteur_instit_cm - 'Sans activité'</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">B39A et B39B non posées aux CM inactifs (B36 > 2). 27 315 NaN - 'Sans activité'.</div>
+    </div>
+    </div>
+    <div style="margin-bottom:24px;border-radius:8px;overflow:hidden;
+                box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+        <div style="background:#276749;color:#ffffff;padding:10px 16px;
+                    font-size:12px;font-weight:700;letter-spacing:0.05em;
+                    text-transform:uppercase;">Valeurs non imputées</div>
+        
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:0;
+                border-bottom:1px solid #c6f6d5;">
+        <div style="padding:12px 14px;background:#f0fff4;
+                    font-weight:600;color:#1A4731;font-size:13px;
+                    border-right:2px solid #276749;">A09 - 0.98% de manquants</div>
+        <div style="padding:12px 16px;color:#2d3748;
+                    font-size:13px;line-height:1.6;">595 ménages sans numéro. Erreurs de saisie terrain, non reconstituables. Conservés dans la table mais non joignables à la table individus.</div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Généré automatiquement par le pipeline RGPH-5 - Groupe 2
+</div>
+
+</body>
+</html>
