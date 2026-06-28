@@ -14,7 +14,7 @@ import pathlib
 # 1. CHEMINS
 # ==============================================================================
 ROOT       = pathlib.Path(__file__).resolve().parent.parent
-INPUT_DIR  = ROOT / "input"
+INPUT_DIR  = ROOT / "data"
 OUTPUT_DIR = ROOT / "output"
 DICT_DIR   = OUTPUT_DIR / "dict"
 LOGS_DIR   = OUTPUT_DIR / "logs"

@@ -23,7 +23,7 @@ import pyreadstat
 
 # ── Chemins ──────────────────────────────────────────────────────────────────
 ROOT      = pathlib.Path(__file__).resolve().parents[3]
-INPUT_SAV = ROOT / "input" / "dixieme_RGPH_5_indiv_SECTION_B.sav"
+INPUT_SAV = ROOT / "data" / "dixieme_RGPH_5_indiv_SECTION_B.sav"
 OUT_DIR   = ROOT / "output" / "dict"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
