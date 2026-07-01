@@ -111,9 +111,11 @@ Pour specifier les variables a conserver ainsi que leurs nouveaux noms, les fich
 
 ### Etape 2 : Selection, Typage et Etiquetage
 Les scripts filtrent les variables en fonction des choix renseignes dans les dictionnaires `_filled.csv`, les renomment avec des identifiants lisibles et associent chaque code numerique de categorie a son etiquette textuelle correspondante :
-- [1_apply_hh_dict.py](cleansurvey/1_data_exploration/2_select_and_label/1_apply_hh_dict.py) : Application du dictionnaire et des modalites pour les menages (`rgph5_hh_renamed.csv`).
 - [2_1_apply_ind_dict.py](cleansurvey/1_data_exploration/2_select_and_label/2_1_apply_ind_dict.py) : Application du dictionnaire pour les individus (Selection et typage).
 - [2_2_apply_ind_dict.py](cleansurvey/1_data_exploration/2_select_and_label/2_2_apply_ind_dict.py) : Application du dictionnaire de modalites pour les individus (`rgph5_ind_renamed.csv`).
+- [1_apply_hh_dict.py](cleansurvey/1_data_exploration/2_select_and_label/1_apply_hh_dict.py) : Application du dictionnaire et des modalites pour les menages (`rgph5_hh_renamed.csv`).
+
+**Important** : `1_apply_hh_dict.py` doit etre execute **apres** les deux scripts individus, car il lit `rgph5_ind_renamed.csv` pour calculer la taille du menage et extraire les variables du Chef de Menage. C'est l'ordre suivi par [run_all.py](cleansurvey/run_all.py).
 
 ### Etape 3 : Nettoyage Standardise et Imputation
 Le script [1_clean_hh_ind.py](cleansurvey/2_clean_and_merge/1_clean_hh_ind.py) effectue les operations de qualite suivantes :
