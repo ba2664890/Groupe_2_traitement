@@ -214,6 +214,103 @@ def calculate_qaqc():
     else:
         report.append("Aucun individu de 5 ans et plus pour estimer l'alphabétisation.")
         
+    # 5. CARACTÉRISTIQUES DE L'EMPLOI
+    report.append("## 5. Caractéristiques de l'Emploi (Population de 15 ans et +)")
+    df_15 = df[df['age'] >= 15]
+    if len(df_15) > 0:
+        # Statut d'emploi
+        if 'statut_emploi' in df.columns:
+            report.append("### Répartition par Statut d'Emploi")
+            counts = df_15['statut_emploi'].value_counts(dropna=False)
+            pct = df_15['statut_emploi'].value_counts(normalize=True, dropna=False) * 100
+            df_se = pd.DataFrame({"Statut": counts.index, "Effectif": counts.values, "Pourcentage (%)": pct.values.round(2)})
+            report.append(df_se.to_markdown(index=False))
+            report.append("\n")
+            
+        # Secteur institutionnel
+        if 'secteur_instit' in df.columns:
+            report.append("### Répartition par Secteur d'Activité (Secteur Institutionnel)")
+            counts = df_15['secteur_instit'].value_counts(dropna=False)
+            pct = df_15['secteur_instit'].value_counts(normalize=True, dropna=False) * 100
+            df_si = pd.DataFrame({"Secteur": counts.index, "Effectif": counts.values, "Pourcentage (%)": pct.values.round(2)})
+            report.append(df_si.to_markdown(index=False))
+            report.append("\n")
+            
+        # Profession (Top 10)
+        if 'profession' in df.columns:
+            report.append("### Top 10 des Professions les plus représentées")
+            counts = df_15['profession'].value_counts(dropna=True).head(10)
+            pct = df_15['profession'].value_counts(normalize=True, dropna=True).head(10) * 100
+            df_prof = pd.DataFrame({"Profession": counts.index, "Effectif": counts.values, "Pourcentage (%)": pct.values.round(2)})
+            report.append(df_prof.to_markdown(index=False))
+            report.append("\n")
+            
+        # Revenu d'emploi estimé moyen
+        if 'revenu_emploi_estime' in df.columns:
+            report.append("### Estimation du Revenu d'Emploi Moyen (FCFA)")
+            if 'secteur_instit' in df.columns:
+                # Filtrer les occupés uniquement pour le calcul
+                df_occ = df_15[df_15['statut_emploi'].isin(['Occupé', '1', '1.0'])]
+                if len(df_occ) > 0:
+                    rev_secteur = df_occ.groupby('secteur_instit')['revenu_emploi_estime'].mean().round(0).reset_index()
+                    rev_secteur.columns = ["Secteur Institutionnel", "Revenu Moyen Estimé (FCFA)"]
+                    report.append(rev_secteur.to_markdown(index=False))
+                    report.append("\n")
+                else:
+                    report.append("Aucun individu occupé trouvé pour estimer le revenu par secteur.\n")
+            else:
+                mean_rev = df_15['revenu_emploi_estime'].mean()
+                report.append(f"* **Revenu moyen global (15 ans et +)** : {mean_rev:,.0f} FCFA\n")
+    else:
+        report.append("Aucune observation de 15 ans et plus pour analyser l'emploi.\n")
+
+    # 6. ANALYSE DU HANDICAP (Washington Group)
+    report.append("## 6. Analyse du Handicap (Washington Group)")
+    handicap_cols = ['handicap_vision', 'handicap_audition', 'handicap_moteur', 'handicap_cognitif', 'handicap_soins', 'handicap_communication']
+    handicap_rates = []
+    for col in handicap_cols:
+        if col in df.columns:
+            rate = (df[col] == 1).mean() * 100
+            handicap_rates.append({
+                "Type de Limitation (Handicap)": col.replace('handicap_', '').capitalize(),
+                "Taux de prévalence (%)": round(rate, 2)
+            })
+    if handicap_rates:
+        df_h = pd.DataFrame(handicap_rates).sort_values(by="Taux de prévalence (%)", ascending=False)
+        report.append(df_h.to_markdown(index=False))
+        report.append("\n")
+        
+        avail_cols = [c for c in handicap_cols if c in df.columns]
+        if avail_cols:
+            df['any_handicap'] = (df[avail_cols] == 1).any(axis=1).astype(int)
+            global_prev = df['any_handicap'].mean() * 100
+            report.append(f"* **Taux de prévalence globale (au moins une limitation sévère)** : {global_prev:.2f}%\n")
+    else:
+        report.append("Aucune variable de handicap disponible.\n")
+
+    # 7. ANALYSE DE LA MIGRATION
+    report.append("## 7. Analyse de la Migration et Résidence")
+    if 'situation_residence' in df.columns:
+        report.append("### Répartition de la population par Situation de Résidence")
+        counts = df['situation_residence'].value_counts(dropna=False)
+        pct = df['situation_residence'].value_counts(normalize=True, dropna=False) * 100
+        df_sr = pd.DataFrame({"Situation de résidence": counts.index, "Effectif": counts.values, "Pourcentage (%)": pct.values.round(2)})
+        report.append(df_sr.to_markdown(index=False))
+        report.append("\n")
+        
+    if 'region_residence_1an' in df.columns and 'region' in df.columns:
+        report.append("### Taux de migration interne inter-régionale depuis 1 an")
+        df_mig = df[df['region_residence_1an'].notna() & (df['region_residence_1an'] != df['region'])]
+        mig_rate = (len(df_mig) / len(df)) * 100
+        report.append(f"* **Taux de migration interne récente (inter-régionale)** : {mig_rate:.2f}% de la population a changé de région de résidence au cours de l'année passée.\n")
+        
+        if len(df_mig) > 0:
+            report.append("#### Top 5 des régions de destination des migrants récents")
+            dest = df_mig['region'].value_counts().head(5).reset_index()
+            dest.columns = ["Région de destination", "Nombre de migrants"]
+            report.append(dest.to_markdown(index=False))
+            report.append("\n")
+
     # Sauvegarder le rapport
     out_path = os.path.join(QAQC_DIR, "qaqc_report.md")
     with open(out_path, "w", encoding="utf-8") as f:

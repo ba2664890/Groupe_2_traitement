@@ -4,46 +4,52 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 
 ---
 ## 1. Analyse des valeurs manquantes (Taux de vide)
-| Variable               |   Taux de valeurs manquantes (%) |
-|:-----------------------|---------------------------------:|
-| niveau_etudes          |                            58.55 |
-| branche_etudes         |                            43.84 |
-| alpha_se               |                            19.33 |
-| alpha_br               |                            19.33 |
-| alpha_ja               |                            19.33 |
-| alpha_ha               |                            19.33 |
-| alpha_by               |                            19.33 |
-| alpha_pa               |                            19.33 |
-| alpha_wy               |                            19.33 |
-| alpha_nd               |                            19.33 |
-| alpha_mj               |                            19.33 |
-| alpha_no               |                            19.33 |
-| alpha_ka               |                            19.33 |
-| alpha_la               |                            19.33 |
-| alpha_gu               |                            19.33 |
-| alpha_sa               |                            19.33 |
-| alpha_on               |                            19.33 |
-| alpha_me               |                            19.33 |
-| alpha_mn               |                            19.33 |
-| alpha_ba               |                            19.33 |
-| scolarisation          |                             9.22 |
-| lien_parente           |                             2.33 |
-| milieu_residence       |                             0    |
-| commune                |                             0    |
-| departement            |                             0    |
-| region                 |                             0    |
-| numind                 |                             0    |
-| men_id                 |                             0    |
-| alpha_so               |                             0    |
-| alpha_fr               |                             0    |
-| sexe                   |                             0    |
-| alpha_ma               |                             0    |
-| alpha_jo               |                             0    |
-| alpha_pu               |                             0    |
-| alpha_wo               |                             0    |
-| alpha_ar               |                             0    |
-| age                    |                             0    |
-| situation_matrimoniale |                             0    |
+| Variable                  |   Taux de valeurs manquantes (%) |
+|:--------------------------|---------------------------------:|
+| niveau_etudes_cm          |                            68.63 |
+| niveau_etudes             |                            58.55 |
+| branche_etudes            |                            43.84 |
+| alpha_by                  |                            19.33 |
+| alpha_me                  |                            19.33 |
+| alpha_ba                  |                            19.33 |
+| alpha_mn                  |                            19.33 |
+| alpha_no                  |                            19.33 |
+| alpha_se                  |                            19.33 |
+| alpha_mj                  |                            19.33 |
+| alpha_br                  |                            19.33 |
+| alpha_on                  |                            19.33 |
+| alpha_pa                  |                            19.33 |
+| alpha_wy                  |                            19.33 |
+| alpha_ka                  |                            19.33 |
+| alpha_ja                  |                            19.33 |
+| alpha_gu                  |                            19.33 |
+| alpha_la                  |                            19.33 |
+| alpha_sa                  |                            19.33 |
+| alpha_ha                  |                            19.33 |
+| alpha_nd                  |                            19.33 |
+| scolarisation             |                             9.22 |
+| lien_parente              |                             2.33 |
+| sexe_cm                   |                             2.33 |
+| scolarisation_cm          |                             2.33 |
+| age_cm                    |                             2.33 |
+| situation_matrimoniale_cm |                             2.33 |
+| taille_menage             |                             2.33 |
+| age                       |                             0    |
+| commune                   |                             0    |
+| milieu_residence          |                             0    |
+| sexe                      |                             0    |
+| men_id                    |                             0    |
+| numind                    |                             0    |
+| region                    |                             0    |
+| departement               |                             0    |
+| alpha_so                  |                             0    |
+| alpha_pu                  |                             0    |
+| alpha_wo                  |                             0    |
+| alpha_fr                  |                             0    |
+| alpha_ar                  |                             0    |
+| alpha_ma                  |                             0    |
+| alpha_jo                  |                             0    |
+| situation_matrimoniale    |                             0    |
 
 
 ## 2. Caractéristiques Démographiques
@@ -200,3 +206,9 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 | BY       |                         0.08 |
 | WY       |                         0.08 |
 
+
+## 5. Caractéristiques de l'Emploi (Population de 15 ans et +)
+## 6. Analyse du Handicap (Washington Group)
+Aucune variable de handicap disponible.
+
+## 7. Analyse de la Migration et Résidence

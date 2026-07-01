@@ -74,10 +74,80 @@ def main():
         dict_mod = pd.read_csv(mod_filled_path)
         df_renamed = apply_modality_dictionary(df_renamed, dict_mod)
         
+    # Charger la base individus renommée pour calculer la taille et extraire le CM
+    ind_renamed_file = os.path.join(OUTPUT_DIR, "rgph5_ind_renamed.csv")
+    if os.path.exists(ind_renamed_file):
+        print(" Enrichissement de la base ménages avec la taille et les variables du CM...")
+        df_ind = pd.read_csv(ind_renamed_file)
+        
+        # 1. Calcul de la taille du ménage
+        df_taille = df_ind.groupby('men_id').size().reset_index(name='taille_menage')
+        df_renamed = df_renamed.merge(df_taille, on='men_id', how='left')
+        
+        # 2. Extraction du Chef de Ménage (CM)
+        # Trouver dynamiquement l'étiquette de Chef de Ménage (code 1.0) dans les métadonnées
+        mod_filled_path = os.path.join(AUX_DIR, "dictionary_modality_ind_filled.csv")
+        cm_label = "Chef de ménage"
+        
+        def load_mapping_from_dict(var_name):
+            mapping = {}
+            if os.path.exists(mod_filled_path):
+                df_mod = pd.read_csv(mod_filled_path)
+                df_var = df_mod[df_mod['var_name'] == var_name]
+                for _, row in df_var.iterrows():
+                    code = row['code']
+                    lbl = row['label_new']
+                    mapping[code] = lbl
+                    mapping[str(code)] = lbl
+                    try:
+                        mapping[int(float(code))] = lbl
+                        mapping[f"{float(code):.1f}"] = lbl
+                    except ValueError:
+                        pass
+            return mapping
+            
+        parente_lbls = load_mapping_from_dict('lien_parente')
+        for code, label in parente_lbls.items():
+            if str(code) in ['1', '1.0'] or code == 1:
+                cm_label = label
+                break
+                
+        cm_mask = df_ind['lien_parente'].astype(str).str.strip().str.lower().isin([
+            str(cm_label).strip().lower(), 'chef de ménage', 'chef de menage', '1', '1.0'
+        ])
+        df_cm = df_ind[cm_mask].copy()
+        cm_cols = {
+            'men_id': 'men_id',
+            'sexe': 'sexe_cm',
+            'age': 'age_cm',
+            'scolarisation': 'scolarisation_cm',
+            'niveau_etudes': 'niveau_etudes_cm',
+            'situation_matrimoniale': 'situation_matrimoniale_cm',
+            'statut_emploi': 'statut_emploi_cm',
+            'branche_isic': 'branche_isic_cm',
+            'secteur_instit': 'secteur_instit_cm'
+        }
+        cm_cols_keep = [c for c in cm_cols.keys() if c in df_cm.columns]
+        df_cm = df_cm[cm_cols_keep].rename(columns={c: cm_cols[c] for c in cm_cols_keep})
+        
+        # Mappage dynamique des variables d'emploi/secteur pour le CM
+        statut_emploi_lbl = load_mapping_from_dict('statut_emploi')
+        secteur_instit_lbl = load_mapping_from_dict('secteur_instit')
+        
+        if 'statut_emploi_cm' in df_cm.columns and statut_emploi_lbl:
+            df_cm['statut_emploi_cm'] = df_cm['statut_emploi_cm'].map(statut_emploi_lbl).fillna(df_cm['statut_emploi_cm'])
+        if 'secteur_instit_cm' in df_cm.columns and secteur_instit_lbl:
+            df_cm['secteur_instit_cm'] = df_cm['secteur_instit_cm'].map(secteur_instit_lbl).fillna(df_cm['secteur_instit_cm'])
+
+        df_cm = df_cm.drop_duplicates(subset=['men_id'], keep='first')
+        df_renamed = df_renamed.merge(df_cm, on='men_id', how='left')
+    else:
+        print(" Base individus renommée absente. Pas d'enrichissement de la base ménages.")
+        
     # Sauvegarder la base renommée et labellisée
     out_file = os.path.join(OUTPUT_DIR, "rgph5_hh_renamed.csv")
     df_renamed.to_csv(out_file, index=False, encoding='utf-8')
-    print(f"✔ Base ménages renommée et labellisée sauvegardée dans : {out_file}")
+    print(f" Base ménages renommée et labellisée sauvegardée dans : {out_file}")
 
 if __name__ == "__main__":
     main()

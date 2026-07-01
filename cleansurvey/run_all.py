@@ -16,21 +16,22 @@ scripts = [
     os.path.join(BASE_DIR, "1_data_exploration/1_get_initial_dict/1_get_hh_dict.py"),
     os.path.join(BASE_DIR, "1_data_exploration/1_get_initial_dict/2_1_get_ind_dict.py"),
     
-    # 2. Application des dictionnaires de variables
-    os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/1_apply_hh_dict.py"),
+    # 2. Application des dictionnaires de variables et modalités INDIVIDUS
     os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/2_1_apply_ind_dict.py"),
-    
-    # 3. Application des dictionnaires de modalités
     os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/2_2_apply_ind_dict.py"),
     
-    # 4. Nettoyage
+    # 3. Application des dictionnaires de variables MENAGES (utilise individus renommés)
+    os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/1_apply_hh_dict.py"),
+    
+    # 4. Nettoyage (standardisé pour les deux tables)
     os.path.join(BASE_DIR, "2_clean_and_merge/1_clean_hh_ind.py"),
     
-    # 5. Fusion
+    # 5. Fusion (génère hh_final.csv et rgph5_merged.csv)
     os.path.join(BASE_DIR, "2_clean_and_merge/2_merge_hh_ind.py"),
     
-    # 6. Rapport QAQC final
-    os.path.join(BASE_DIR, "9_qaqc/1_survey_data_qaqc/1_qaqc_report.py")
+    # 6. Rapports QAQC finaux (Individus et Ménages)
+    os.path.join(BASE_DIR, "9_qaqc/1_survey_data_qaqc/1_qaqc_report.py"),
+    os.path.join(BASE_DIR, "9_qaqc/1_survey_data_qaqc/2_qaqc_menage.py")
 ]
 
 def main():
