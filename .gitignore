@@ -30,3 +30,6 @@ data/*.csv
 .DS_Store
 Thumbs.db
 *.log
+
+# --- Office lock files ---
+.~lock.*#
