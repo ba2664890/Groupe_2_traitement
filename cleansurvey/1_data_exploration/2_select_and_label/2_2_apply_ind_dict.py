@@ -43,8 +43,16 @@ def dichotomiser_handicap(df, col_brut, col_nouveau):
     Oui si 'Beaucoup de difficultés' ou 'Ne peut pas du tout' (ou codes 3, 4).
     """
     if col_brut in df.columns:
-        valeurs_oui = ['beaucoup de difficultés', 'ne peut pas du tout', '3', '4', '3.0', '4.0']
-        df[col_nouveau] = df[col_brut].astype(str).str.strip().str.lower().isin(valeurs_oui).astype(int)
+        # Méthodologie du Groupe de Washington : est considéré "positif" (difficulté significative)
+        # toute réponse "beaucoup de difficultés" ou "ne peut pas du tout / pas du tout capable".
+        # Correspondance par sous-chaîne (et non égalité stricte) pour couvrir les variantes de
+        # formulation issues du dictionnaire de modalités (ex : "Oui, beaucoup de difficultés").
+        motifs_oui = ['beaucoup de difficult', 'ne peut pas du tout', 'pas du tout capable']
+        codes_oui = ['3', '4', '3.0', '4.0']
+        s = df[col_brut].astype(str).str.strip().str.lower()
+        is_oui_texte = s.str.contains('|'.join(motifs_oui), na=False, regex=True)
+        is_oui_code = s.isin(codes_oui)
+        df[col_nouveau] = (is_oui_texte | is_oui_code).astype(int)
         # Si la colonne d'origine est NaN, on remet NaN
         df.loc[df[col_brut].isna(), col_nouveau] = np.nan
     return df

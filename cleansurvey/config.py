@@ -153,6 +153,10 @@ CLEANING_PARAMS = {
         }
     ],
     
+    # Variables explicitement requises par la consigne, à conserver meme si
+    # elles s'averent constantes sur l'echantillon (ex : type_menage).
+    'vars_to_keep_always': ['type_menage'],
+
     # Stratégie de gestion des doublons de colonnes lors de la jointure
     # stratégie: "hh" (garder HH) | "ind" (garder IND) | "both" (garder les deux avec suffixes)
     'duplicate_cols_strategy': {

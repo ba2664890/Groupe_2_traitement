@@ -4,52 +4,77 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 
 ---
 ## 1. Analyse des valeurs manquantes (Taux de vide)
-| Variable                  |   Nombre de manquants |   Taux de valeurs manquantes (%) | Statut       |
-|:--------------------------|----------------------:|---------------------------------:|:-------------|
-| niveau_etudes             |                473509 |                            27.65 | Élevé > 20%  |
-| niveau_etudes_cm          |                411481 |                            24.03 | Élevé > 20%  |
-| alpha_by                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_nd                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_me                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_ba                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_mn                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_no                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_se                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_mj                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_br                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_on                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_pa                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_wy                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_ka                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_ja                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_gu                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_la                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_sa                  |                121186 |                             7.08 | Modéré 5–20% |
-| alpha_ha                  |                121186 |                             7.08 | Modéré 5–20% |
-| scolarisation_cm          |                 39936 |                             2.33 | Faible < 5%  |
-| age_cm                    |                 39936 |                             2.33 | Faible < 5%  |
-| lien_parente              |                 39936 |                             2.33 | Faible < 5%  |
-| sexe_cm                   |                 39936 |                             2.33 | Faible < 5%  |
-| situation_matrimoniale_cm |                 39936 |                             2.33 | Faible < 5%  |
-| taille_menage             |                 39936 |                             2.33 | Faible < 5%  |
-| scolarisation             |                 38954 |                             2.27 | Faible < 5%  |
-| branche_etudes            |                 38954 |                             2.27 | Faible < 5%  |
-| age                       |                     0 |                             0    | Complet      |
-| commune                   |                     0 |                             0    | Complet      |
-| milieu_residence          |                     0 |                             0    | Complet      |
-| sexe                      |                     0 |                             0    | Complet      |
-| men_id                    |                     6 |                             0    | Complet      |
-| numind                    |                    69 |                             0    | Complet      |
-| region                    |                     0 |                             0    | Complet      |
-| departement               |                     0 |                             0    | Complet      |
-| alpha_so                  |                     0 |                             0    | Complet      |
-| alpha_pu                  |                     0 |                             0    | Complet      |
-| alpha_wo                  |                     0 |                             0    | Complet      |
-| alpha_fr                  |                     0 |                             0    | Complet      |
-| alpha_ar                  |                     0 |                             0    | Complet      |
-| alpha_ma                  |                     0 |                             0    | Complet      |
-| alpha_jo                  |                     0 |                             0    | Complet      |
-| situation_matrimoniale    |                     0 |                             0    | Complet      |
+| Variable                    |   Nombre de manquants |   Taux de valeurs manquantes (%) | Statut       |
+|:----------------------------|----------------------:|---------------------------------:|:-------------|
+| niveau_etudes               |                473509 |                            27.65 | Élevé > 20%  |
+| niveau_etudes_cm            |                411481 |                            24.03 | Élevé > 20%  |
+| handicap_communication_brut |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_vision_brut        |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_moteur_brut        |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_vision             |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_communication      |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_soins              |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_cognitif           |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_audition           |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_soins_brut         |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_audition_brut      |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_cognitif_brut      |                121388 |                             7.09 | Modéré 5–20% |
+| handicap_moteur             |                121388 |                             7.09 | Modéré 5–20% |
+| alpha_ka                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_nd                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ja                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_gu                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_la                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ha                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_on                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_sa                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ba                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_mn                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_no                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_me                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_wy                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_by                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_pa                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_se                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_mj                    |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_br                    |                121186 |                             7.08 | Modéré 5–20% |
+| statut_emploi_cm            |                 39936 |                             2.33 | Faible < 5%  |
+| secteur_instit_cm           |                 39936 |                             2.33 | Faible < 5%  |
+| age_cm                      |                 39936 |                             2.33 | Faible < 5%  |
+| scolarisation_cm            |                 39936 |                             2.33 | Faible < 5%  |
+| situation_matrimoniale_cm   |                 39936 |                             2.33 | Faible < 5%  |
+| branche_isic_cm             |                 39936 |                             2.33 | Faible < 5%  |
+| lien_parente                |                 39936 |                             2.33 | Faible < 5%  |
+| sexe_cm                     |                 39936 |                             2.33 | Faible < 5%  |
+| taille_menage               |                 39936 |                             2.33 | Faible < 5%  |
+| type_menage                 |                 39936 |                             2.33 | Faible < 5%  |
+| scolarisation               |                 38954 |                             2.27 | Faible < 5%  |
+| branche_etudes              |                 38954 |                             2.27 | Faible < 5%  |
+| men_id                      |                     6 |                             0    | Complet      |
+| commune                     |                     0 |                             0    | Complet      |
+| departement                 |                     0 |                             0    | Complet      |
+| region                      |                     0 |                             0    | Complet      |
+| numind                      |                    69 |                             0    | Complet      |
+| situation_residence         |                     0 |                             0    | Complet      |
+| sexe                        |                     0 |                             0    | Complet      |
+| region_residence_1an        |                     0 |                             0    | Complet      |
+| dept_residence_1an          |                     0 |                             0    | Complet      |
+| alpha_so                    |                     0 |                             0    | Complet      |
+| alpha_pu                    |                     0 |                             0    | Complet      |
+| alpha_wo                    |                     0 |                             0    | Complet      |
+| alpha_fr                    |                     0 |                             0    | Complet      |
+| alpha_ar                    |                     0 |                             0    | Complet      |
+| alpha_ma                    |                     0 |                             0    | Complet      |
+| alpha_jo                    |                     0 |                             0    | Complet      |
+| age                         |                     0 |                             0    | Complet      |
+| milieu_residence            |                     0 |                             0    | Complet      |
+| secteur_instit              |                     0 |                             0    | Complet      |
+| profession                  |                     0 |                             0    | Complet      |
+| branche_isic                |                     0 |                             0    | Complet      |
+| statut_emploi               |                     0 |                             0    | Complet      |
+| situation_matrimoniale      |                     0 |                             0    | Complet      |
+| revenu_emploi_estime        |                     0 |                             0    | Complet      |
+| any_handicap                |                     0 |                             0    | Complet      |
 
 
 ## 2. Caractéristiques Démographiques
@@ -209,5 +234,86 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 
 
 ## 5. Caractéristiques de l'Emploi (Population de 15 ans et +)
+### Répartition par Statut d'Emploi
+| Statut                                       |   Effectif |   Pourcentage (%) |
+|:---------------------------------------------|-----------:|------------------:|
+| Occupé                                       |     323931 |             30.91 |
+| A la recherche d un premier emploi           |     178016 |             16.99 |
+| Occupé au foyer                              |     168194 |             16.05 |
+| Etudiant/elève                               |     151266 |             14.44 |
+| Autres inactifs, à préciser                  |      97393 |              9.29 |
+| Autres inactifs                              |      47999 |              4.58 |
+| Personne du 3e age non pensionnée            |      32039 |              3.06 |
+| Chômeur ayant travaillé                      |      19224 |              1.83 |
+| Rentier                                      |      18811 |              1.8  |
+| Personne du 3e age pensionnée (FNR ou IPRES) |      10969 |              1.05 |
+
+
+### Répartition par Secteur d'Activité (Secteur Institutionnel)
+| Secteur                             |   Effectif |   Pourcentage (%) |
+|:------------------------------------|-----------:|------------------:|
+| Unknown                             |     723911 |             69.09 |
+| Informel                            |     163505 |             15.6  |
+| Public                              |     102761 |              9.81 |
+| Privé formel                        |      56897 |              5.43 |
+| ISBLSM (ONG, ASC, Fondations, etc.) |        768 |              0.07 |
+
+
+### Top 10 des Professions les plus représentées
+| Profession                                                         |   Effectif |   Pourcentage (%) |
+|:-------------------------------------------------------------------|-----------:|------------------:|
+| na                                                                 |     723911 |             69.09 |
+| Autres                                                             |      35306 |              3.37 |
+| Acheteurs                                                          |      31012 |              2.96 |
+| Acteurs                                                            |      26193 |              2.5  |
+| Commerçants, magasins                                              |      22706 |              2.17 |
+| Sans profession                                                    |      21347 |              2.04 |
+| Agriculteurs et éleveurs, subsistance                              |      19236 |              1.84 |
+| Chauffeurs de taxi et conducteurs d'automobiles et de camionnettes |      13564 |              1.29 |
+| Tailleurs, couturiers, fourreurs, modistes et chapeliers           |      12120 |              1.16 |
+| Maçons                                                             |       9660 |              0.92 |
+
+
+### Estimation du Revenu d'Emploi Moyen (FCFA)
+| Secteur Institutionnel              | Revenu Moyen Estimé (FCFA)   |
+|:------------------------------------|:-----------------------------|
+| ISBLSM (ONG, ASC, Fondations, etc.) | 200,000 FCFA                 |
+| Informel                            | 90,000 FCFA                  |
+| Privé formel                        | 250,000 FCFA                 |
+| Public                              | 350,000 FCFA                 |
+
+
 ## 6. Analyse du Handicap (Washington Group)
+| Type de Limitation (Handicap)   | Taux de prévalence (%)   |
+|:--------------------------------|:-------------------------|
+| Moteur                          | 1.10%                    |
+| Vision                          | 0.97%                    |
+| Soins                           | 0.73%                    |
+| Cognitif                        | 0.61%                    |
+| Communication                   | 0.59%                    |
+| Audition                        | 0.56%                    |
+
+
+* **Taux de prévalence globale (au moins une limitation sévère)** : 2.28%
+
 ## 7. Analyse de la Migration et Résidence
+### Répartition de la population par Situation de Résidence
+| Situation de résidence   |   Effectif |   Pourcentage (%) |
+|:-------------------------|-----------:|------------------:|
+| Résident Présent         |    1553511 |             90.72 |
+| Résident Absent          |     116682 |              6.81 |
+| Visiteur                 |      42175 |              2.46 |
+
+
+### Taux de migration interne récente (inter-régionale) depuis 1 an
+* **Taux de migration interne récente (inter-régionale)** : 9.54% de la population.
+
+#### Top 5 des régions de destination des migrants récents
+| Région de destination   |   Nombre de migrants |
+|:------------------------|---------------------:|
+| DAKAR                   |                34947 |
+| DIOURBEL                |                30148 |
+| THIES                   |                19799 |
+| KAOLACK                 |                11493 |
+| SAINT-LOUIS             |                10244 |
+

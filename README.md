@@ -1,5 +1,16 @@
 # Pipeline de Traitement et de Controle Qualite des Donnees RGPH-5
 
+> **Note de correction** : les dictionnaires `data/aux_file/dictionary_ind_filled.csv` et `data/aux_file/dictionary_hh_filled.csv`
+> ont ete completes pour inclure les variables Emploi (B36 statut_emploi, B37 profession, B39A branche_isic, B39B secteur_instit),
+> Handicap (B21-B26, dichotomisees dans `2_2_apply_ind_dict.py`), Migration (B11 situation_residence, B15B_REG/DEP residence 1 an)
+> et Type de menage (A11 type_menage), auparavant marquees `keep=no` et donc absentes des tables finales malgre leur presence
+> dans le code de traitement (`2_2_apply_ind_dict.py`, `1_apply_hh_dict.py`, `config.py`).
+> **Action requise avant re-livraison** : relancer le pipeline avec les fichiers `.sav` source disponibles
+> (`2_1_apply_ind_dict.py` -> `2_2_apply_ind_dict.py` -> `1_apply_hh_dict.py` -> `1_clean_hh_ind.py` -> `2_merge_hh_ind.py` -> scripts QAQC)
+> afin de regenerer `rgph5_ind_renamed.csv`, `rgph5_merged.csv`, `hh_final.csv` et les rapports QAQC avec ces variables desormais integrees.
+> La variable `revenu_emploi_estime` reste une **estimation conventionnelle par secteur** (non une donnee de revenu reellement collectee
+> par le RGPH) — a documenter explicitement comme telle dans le memoire/rapport, ou a retirer si non pertinente.
+
 Ce projet implemente un pipeline complet en Python pour le traitement, le nettoyage, la fusion et l'evaluation de la qualite (QA/QC) des donnees issues du recensement general de la population et de l'habitat (RGPH-5). Il traite en particulier les questionnaires relatifs aux menages (habitat, Section E) et aux individus (Section B).
 
 ---

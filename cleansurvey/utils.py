@@ -110,16 +110,19 @@ def apply_modality_dictionary(df: pd.DataFrame, dict_df: pd.DataFrame) -> pd.Dat
         # Créer le dictionnaire de mapping (attention aux types des clés, souvent float ou int)
         mapping = {}
         for _, row in var_dict.iterrows():
+            # Toujours ajouter les variantes texte (code brut et code strip())
+            # pour couvrir le cas ou la colonne cible est restee de type chaine.
+            mapping[row['code']] = str(row['label_new'])
+            mapping[str(row['code']).strip()] = str(row['label_new'])
             try:
                 code_val = float(row['code'])
                 # Si c'est un entier représenté en float, on le gère
                 if code_val.is_integer():
                     mapping[int(code_val)] = str(row['label_new'])
+                    mapping[str(int(code_val))] = str(row['label_new'])
                 mapping[code_val] = str(row['label_new'])
-            except ValueError:
-                # Si le code n'est pas numérique
-                mapping[row['code']] = str(row['label_new'])
-                mapping[str(row['code']).strip()] = str(row['label_new'])
+            except (ValueError, TypeError):
+                pass
         
         # Pour les valeurs manquantes ou non mappées, conserver ou mettre à NaN
         # Optionnel: on applique le mapping
@@ -146,13 +149,18 @@ def dedup(df: pd.DataFrame, key_cols: List[str]) -> pd.DataFrame:
 def drop_vars(df: pd.DataFrame, params: dict) -> pd.DataFrame:
     """
     Supprime les variables spécifiées et les variables constantes.
+    Les variables listées dans params['vars_to_keep_always'] sont exemptées
+    de la purge automatique des colonnes constantes (ex : type_menage peut être
+    constant sur un sous-échantillon donné mais reste une caractéristique
+    explicitement requise du livrable).
     """
     to_drop = [c for c in params.get('vars_to_drop', []) if c in df.columns]
+    vars_to_keep_always = set(params.get('vars_to_keep_always', []))
     
     # Identifier les colonnes constantes (un seul élément non nul)
     constant_cols = []
     for col in df.columns:
-        if col in key_cols_global:
+        if col in key_cols_global or col in vars_to_keep_always:
             continue
         non_na = df[col].dropna()
         if len(non_na.unique()) <= 1:
