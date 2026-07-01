@@ -1,0 +1,32 @@
+# --- Python Cache ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+# --- Virtual Environments ---
+venv/
+.venv/
+env/
+ENV/
+bin/
+include/
+lib/
+share/
+pyvenv.cfg
+
+# --- Data files ---
+# Ignore large dataset CSV files in the data folder
+data/*.csv
+
+# But keep the auxiliary configurations/dictionaries and QAQC reports
+!data/aux_file/
+!data/output_qaqc/
+
+# --- System and IDEs ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
