@@ -30,8 +30,8 @@ scripts = [
     os.path.join(BASE_DIR, "2_clean_and_merge/2_merge_hh_ind.py"),
     
     # 6. Rapports QAQC finaux (Individus et Ménages)
-    os.path.join(BASE_DIR, "9_qaqc/1_survey_data_qaqc/1_qaqc_report.py"),
-    os.path.join(BASE_DIR, "9_qaqc/1_survey_data_qaqc/2_qaqc_menage.py")
+    os.path.join(BASE_DIR, "9_qaqc/1_qaqc_individus.py"),
+    os.path.join(BASE_DIR, "9_qaqc/2_qaqc_menage.py")
 ]
 
 def main():
@@ -69,11 +69,11 @@ def main():
             except Exception as e:
                 logging.warning(f"  Impossible de supprimer {f} : {e}")
     except Exception as e:
-        logging.warning(f"⚠️ Erreur lors du nettoyage initial : {e}")
+        logging.warning(f" Erreur lors du nettoyage initial : {e}")
         
     for script in scripts:
         if not os.path.exists(script):
-            logging.warning(f"⚠️ Script introuvable : {script} - Étape ignorée.")
+            logging.warning(f" Script introuvable : {script} - Étape ignorée.")
             continue
             
         logging.info(f"▶ Exécution de : {os.path.basename(script)}")
@@ -88,11 +88,11 @@ def main():
             )
             print(result.stdout)
         except subprocess.CalledProcessError as e:
-            logging.error(f"❌ Erreur lors de l'exécution de {os.path.basename(script)}:")
+            logging.error(f" Erreur lors de l'exécution de {os.path.basename(script)}:")
             print(e.stderr)
             sys.exit(1)
             
-    logging.info("✅ Pipeline exécuté avec succès. Tous les rapports et données nettoyées sont dans le dossier 'data/'.")
+    logging.info(" Pipeline exécuté avec succès. Tous les rapports et données nettoyées sont dans le dossier 'data/'.")
 
 if __name__ == "__main__":
     main()

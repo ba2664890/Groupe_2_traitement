@@ -333,3 +333,11 @@ def resolve_duplicates(df_hh: pd.DataFrame, df_ind: pd.DataFrame, params: dict) 
             logging.info(f"  [duplicates] '{col}' : renommée en '{col}{suffixes[0]}' (HH) et '{col}{suffixes[1]}' (IND)")
             
     return df_hh, df_ind
+
+def section_header(titre: str) -> None:
+    """Affiche un séparateur de section dans la console."""
+    print(f"\n{'=' * 55}")
+    # '=' * 55 - répète le caractère '=' 55 fois
+    # Produit : =======================================================
+    print(f"  {titre}")
+    print(f"{'=' * 55}")

@@ -1,0 +1,6 @@
+pandas
+numpy
+pyreadstat
+openpyxl
+jinja2
+tabulate

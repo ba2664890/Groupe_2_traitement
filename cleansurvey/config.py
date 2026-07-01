@@ -1,11 +1,17 @@
 # Configuration du pipeline de traitement des données de recensement RGPH-5
 import os
 
+# Trouver le chemin de base du projet
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # cleansurvey/
+PROJECT_ROOT = os.path.dirname(BASE_DIR)             # Groupe_2_traitement/
+
 # 1. CHEMINS D'ACCÈS
-INPUT_DIR = "/home/abdou/Documents/Memoire_AS/data/Base_1_10rgph-5"
-OUTPUT_DIR = "/home/abdou/Documents/Groupe_2_traitement/data"
-AUX_DIR = "/home/abdou/Documents/Groupe_2_traitement/data/aux_file"
-QAQC_DIR = "/home/abdou/Documents/Groupe_2_traitement/data/output_qaqc"
+# Les chemins sont definis relativement pour assurer la reproductibilite du projet.
+# Ils peuvent etre personnalises localement ou surcharges par des variables d'environnement.
+INPUT_DIR = os.getenv("RGPH_INPUT_DIR", os.path.abspath(os.path.join(PROJECT_ROOT, "../Memoire_AS/data/Base_1_10rgph-5")))
+OUTPUT_DIR = os.getenv("RGPH_OUTPUT_DIR", os.path.join(PROJECT_ROOT, "data"))
+AUX_DIR = os.getenv("RGPH_AUX_DIR", os.path.join(OUTPUT_DIR, "aux_file"))
+QAQC_DIR = os.getenv("RGPH_QAQC_DIR", os.path.join(OUTPUT_DIR, "output_qaqc"))
 
 # S'assurer que les dossiers de sortie existent
 os.makedirs(OUTPUT_DIR, exist_ok=True)

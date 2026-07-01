@@ -4,52 +4,52 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 
 ---
 ## 1. Analyse des valeurs manquantes (Taux de vide)
-| Variable                  |   Taux de valeurs manquantes (%) |
-|:--------------------------|---------------------------------:|
-| niveau_etudes_cm          |                            68.63 |
-| niveau_etudes             |                            58.55 |
-| branche_etudes            |                            43.84 |
-| alpha_by                  |                            19.33 |
-| alpha_me                  |                            19.33 |
-| alpha_ba                  |                            19.33 |
-| alpha_mn                  |                            19.33 |
-| alpha_no                  |                            19.33 |
-| alpha_se                  |                            19.33 |
-| alpha_mj                  |                            19.33 |
-| alpha_br                  |                            19.33 |
-| alpha_on                  |                            19.33 |
-| alpha_pa                  |                            19.33 |
-| alpha_wy                  |                            19.33 |
-| alpha_ka                  |                            19.33 |
-| alpha_ja                  |                            19.33 |
-| alpha_gu                  |                            19.33 |
-| alpha_la                  |                            19.33 |
-| alpha_sa                  |                            19.33 |
-| alpha_ha                  |                            19.33 |
-| alpha_nd                  |                            19.33 |
-| scolarisation             |                             9.22 |
-| lien_parente              |                             2.33 |
-| sexe_cm                   |                             2.33 |
-| scolarisation_cm          |                             2.33 |
-| age_cm                    |                             2.33 |
-| situation_matrimoniale_cm |                             2.33 |
-| taille_menage             |                             2.33 |
-| age                       |                             0    |
-| commune                   |                             0    |
-| milieu_residence          |                             0    |
-| sexe                      |                             0    |
-| men_id                    |                             0    |
-| numind                    |                             0    |
-| region                    |                             0    |
-| departement               |                             0    |
-| alpha_so                  |                             0    |
-| alpha_pu                  |                             0    |
-| alpha_wo                  |                             0    |
-| alpha_fr                  |                             0    |
-| alpha_ar                  |                             0    |
-| alpha_ma                  |                             0    |
-| alpha_jo                  |                             0    |
-| situation_matrimoniale    |                             0    |
+| Variable                  |   Nombre de manquants |   Taux de valeurs manquantes (%) | Statut       |
+|:--------------------------|----------------------:|---------------------------------:|:-------------|
+| niveau_etudes             |                473509 |                            27.65 | Élevé > 20%  |
+| niveau_etudes_cm          |                411481 |                            24.03 | Élevé > 20%  |
+| alpha_by                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_nd                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_me                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ba                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_mn                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_no                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_se                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_mj                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_br                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_on                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_pa                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_wy                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ka                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ja                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_gu                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_la                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_sa                  |                121186 |                             7.08 | Modéré 5–20% |
+| alpha_ha                  |                121186 |                             7.08 | Modéré 5–20% |
+| scolarisation_cm          |                 39936 |                             2.33 | Faible < 5%  |
+| age_cm                    |                 39936 |                             2.33 | Faible < 5%  |
+| lien_parente              |                 39936 |                             2.33 | Faible < 5%  |
+| sexe_cm                   |                 39936 |                             2.33 | Faible < 5%  |
+| situation_matrimoniale_cm |                 39936 |                             2.33 | Faible < 5%  |
+| taille_menage             |                 39936 |                             2.33 | Faible < 5%  |
+| scolarisation             |                 38954 |                             2.27 | Faible < 5%  |
+| branche_etudes            |                 38954 |                             2.27 | Faible < 5%  |
+| age                       |                     0 |                             0    | Complet      |
+| commune                   |                     0 |                             0    | Complet      |
+| milieu_residence          |                     0 |                             0    | Complet      |
+| sexe                      |                     0 |                             0    | Complet      |
+| men_id                    |                     6 |                             0    | Complet      |
+| numind                    |                    69 |                             0    | Complet      |
+| region                    |                     0 |                             0    | Complet      |
+| departement               |                     0 |                             0    | Complet      |
+| alpha_so                  |                     0 |                             0    | Complet      |
+| alpha_pu                  |                     0 |                             0    | Complet      |
+| alpha_wo                  |                     0 |                             0    | Complet      |
+| alpha_fr                  |                     0 |                             0    | Complet      |
+| alpha_ar                  |                     0 |                             0    | Complet      |
+| alpha_ma                  |                     0 |                             0    | Complet      |
+| alpha_jo                  |                     0 |                             0    | Complet      |
+| situation_matrimoniale    |                     0 |                             0    | Complet      |
 
 
 ## 2. Caractéristiques Démographiques
@@ -115,7 +115,8 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 ### Niveau d'Études
 | Niveau d'études                    |   Effectif |   Pourcentage (%) |
 |:-----------------------------------|-----------:|------------------:|
-| nan                                |    1002546 |             58.55 |
+| na                                 |     529037 |             30.9  |
+| nan                                |     473509 |             27.65 |
 | Cours moyen 2ème année (CM2)       |     104695 |              6.11 |
 | Troisième (3ième)                  |      58877 |              3.44 |
 | Cours élémentaire 2ème année (CE2) |      54342 |              3.17 |
@@ -178,37 +179,35 @@ Ce rapport contient les estimations descriptives primaires après traitement des
 * **Taux d'inscription scolaire active (12-18 ans)** : 46.38%
 
 ### Alphabétisation par langue (Population de 5 ans et plus)
-| Langue   |   Taux d'alphabétisation (%) |
-|:---------|-----------------------------:|
-| FR       |                        31.57 |
-| WO       |                        13.65 |
-| AR       |                         9.75 |
-| PU       |                         5.68 |
-| SE       |                         1.96 |
-| MA       |                         0.76 |
-| BR       |                         0.69 |
-| JO       |                         0.55 |
-| SO       |                         0.27 |
-| BA       |                         0.16 |
-| MJ       |                         0.15 |
-| MN       |                         0.11 |
-| HA       |                         0.11 |
-| PA       |                         0.09 |
-| NO       |                         0.08 |
-| ON       |                         0.08 |
-| ME       |                         0.08 |
-| SA       |                         0.08 |
-| GU       |                         0.08 |
-| KA       |                         0.08 |
-| LA       |                         0.08 |
-| JA       |                         0.08 |
-| ND       |                         0.08 |
-| BY       |                         0.08 |
-| WY       |                         0.08 |
+| Langue   | Taux d'alphabétisation (%)   |
+|:---------|:-----------------------------|
+| AR       | 9.75%                        |
+| PU       | 5.68%                        |
+| FR       | 31.57%                       |
+| WO       | 13.65%                       |
+| SE       | 1.96%                        |
+| MA       | 0.76%                        |
+| BR       | 0.69%                        |
+| JO       | 0.55%                        |
+| SO       | 0.27%                        |
+| BA       | 0.16%                        |
+| MJ       | 0.15%                        |
+| HA       | 0.11%                        |
+| MN       | 0.11%                        |
+| PA       | 0.09%                        |
+| KA       | 0.08%                        |
+| BY       | 0.08%                        |
+| ND       | 0.08%                        |
+| JA       | 0.08%                        |
+| NO       | 0.08%                        |
+| LA       | 0.08%                        |
+| GU       | 0.08%                        |
+| SA       | 0.08%                        |
+| ON       | 0.08%                        |
+| ME       | 0.08%                        |
+| WY       | 0.08%                        |
 
 
 ## 5. Caractéristiques de l'Emploi (Population de 15 ans et +)
 ## 6. Analyse du Handicap (Washington Group)
-Aucune variable de handicap disponible.
-
 ## 7. Analyse de la Migration et Résidence
