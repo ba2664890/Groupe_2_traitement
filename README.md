@@ -17,7 +17,7 @@ graph TD
     end
 
     %% Étape 1
-    subgraph Etape 1 : Exploration et Extraction
+    subgraph "Etape 1 : Exploration et Extraction"
         1_1[1_get_hh_dict.py]
         1_2[2_1_get_ind_dict.py]
         1_3[2_2_get_ind_dict.py]
@@ -35,7 +35,7 @@ graph TD
     CSV_INIT_IND -.->|Edition manuelle| CSV_FILLED_IND[dictionary_ind_filled.csv]
 
     %% Étape 2
-    subgraph Etape 2 : Selection et Etiquetage
+    subgraph "Etape 2 : Selection et Etiquetage"
         2_1[1_apply_hh_dict.py]
         2_2[2_1_apply_ind_dict.py]
         2_3[2_2_apply_ind_dict.py]
@@ -48,7 +48,7 @@ graph TD
     SAV_IND & CSV_FILLED_IND --> 2_2 --> 2_3 --> CSV_REN_IND
 
     %% Étape 3
-    subgraph Etape 3 : Nettoyage et Imputation
+    subgraph "Etape 3 : Nettoyage et Imputation"
         3_1[1_clean_hh_ind.py]
         CSV_CLN_HH[rgph5_hh_clean.csv]
         CSV_CLN_IND[rgph5_ind_clean.csv]
@@ -58,7 +58,7 @@ graph TD
     CSV_REN_IND --> 3_1 --> CSV_CLN_IND
 
     %% Étape 4
-    subgraph Etape 4 : Fusion et Agregation
+    subgraph "Etape 4 : Fusion et Agregation"
         4_1[2_merge_hh_ind.py]
         CSV_FINAL_HH[hh_final.csv]
         CSV_MERGED[rgph5_merged.csv]
@@ -69,16 +69,18 @@ graph TD
     4_1 --> CSV_MERGED
 
     %% Étape 5
-    subgraph Etape 5 : Controle Qualite (QAQC)
+    subgraph "Etape 5 : Controle Qualite (QAQC)"
         5_1[1_qaqc_individus.py]
         5_2[2_qaqc_menage.py]
         
-        REP_IND[qaqc_individus.md]
+        REP_IND_MD[qaqc_individus.md]
+        REP_IND_XLS[qaqc_individus.xlsx]
+        REP_IND_HTML[qaqc_individus.html]
         REP_HH_XLS[qaqc_menage.xlsx]
         REP_HH_HTML[qaqc_menage.html]
     end
 
-    CSV_MERGED --> 5_1 --> REP_IND
+    CSV_MERGED --> 5_1 --> REP_IND_MD & REP_IND_XLS & REP_IND_HTML
     CSV_FINAL_HH --> 5_2 --> REP_HH_XLS & REP_HH_HTML
 ```
 
