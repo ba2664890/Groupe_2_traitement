@@ -1,75 +1,53 @@
-"""
-2_1_get_ind_dict.py
-====================
-Exploration du fichier individus SPSS (.sav) - Section B du RGPH.
-
-Ce script :
-  1. Lit uniquement les METADONNEES du fichier (sans charger toutes les lignes
-     en memoire) pour etre rapide meme sur un fichier de plusieurs Go.
-  2. Exporte un dictionnaire des variables au format CSV :
-     colonne | label_variable | type | n_modalites | modalites (json)
-  3. Affiche un apercu (100 premieres lignes) pour verification.
-
-Output :
-  output/dict/dict_individus.csv   - dictionnaire complet des variables
-  output/dict/apercu_individus.csv - 100 premieres lignes
-"""
-
 import sys
-import json
-import pathlib
+import os
 import pandas as pd
-import pyreadstat
 
-# ── Chemins ──────────────────────────────────────────────────────────────────
-ROOT      = pathlib.Path(__file__).resolve().parents[3]
-INPUT_SAV = ROOT / "data" / "dixieme_RGPH_5_indiv_SECTION_B.sav"
-OUT_DIR   = ROOT / "output" / "dict"
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+# Ajouter le chemin racine du projet au path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-# ── 1. Lecture des metadonnees uniquement ─────────────────────────────────────
-print("Lecture des metadonnees du fichier SAV ...")
-_, meta = pyreadstat.read_sav(
-    str(INPUT_SAV),
-    metadataonly=True
-)
+from cleansurvey.config import INPUT_DIR, FILES, AUX_DIR
+from cleansurvey.utils import load_sav_metadata
 
-# ── 2. Construction du dictionnaire ───────────────────────────────────────────
-print("Construction du dictionnaire des variables ...")
-rows = []
-for col in meta.column_names:
-    idx   = meta.column_names.index(col)
-    label = meta.column_labels[idx] if meta.column_labels else ""
-    vt    = meta.original_variable_types.get(col, "")
-    modalites = meta.variable_value_labels.get(col, {})
-    rows.append({
-        "variable"       : col,
-        "label_variable" : label,
-        "type_spss"      : vt,
-        "n_modalites"    : len(modalites),
-        "modalites"      : json.dumps(modalites, ensure_ascii=False) if modalites else "",
-    })
+def main():
+    print("--- DEBUT EXTRACTION DICTIONNAIRE INDIVIDUS ---")
+    file_path = os.path.join(INPUT_DIR, FILES['ind'])
+    
+    if not os.path.exists(file_path):
+        print(f"Erreur : Le fichier brut {file_path} est introuvable.")
+        sys.exit(1)
+        
+    # Extraire les métadonnées
+    df_dict = load_sav_metadata(file_path)
+    
+    # Ajouter les colonnes requises
+    df_dict['var_new'] = df_dict['var_orig']
+    df_dict['type_new'] = df_dict['type_suggested']
+    df_dict['keep'] = 'no'
+    
+    # Présélectionner les variables requises pour le module Individus du Groupe 2
+    target_vars = [
+        # Identifiants
+        'men_id', 'B01',
+        # Géographie
+        'A01', 'A02', 'A03', 'A04', 'A10',
+        # Démographie
+        'B04', 'B06', 'B08', 'B41',
+        # Éducation / Scolarisation
+        'B29', 'B30', 'B31', 'B32', 'B33', 'B35'
+    ]
+    
+    # Ajouter les variables d'alphabétisation (qui commencent toutes par B34_)
+    for var in df_dict['var_orig']:
+        if var.startswith('B34_'):
+            target_vars.append(var)
+            
+    df_dict.loc[df_dict['var_orig'].isin(target_vars), 'keep'] = 'yes'
+    
+    # Sauvegarder
+    out_path = os.path.join(AUX_DIR, "dictionary_ind_init.csv")
+    df_dict.to_csv(out_path, index=False, encoding='utf-8')
+    print(f"✔ Dictionnaire initial individus sauvegardé dans : {out_path}")
+    print("Il doit être édité ou copié sous le nom 'dictionary_ind_filled.csv' pour la suite.")
 
-dict_df = pd.DataFrame(rows)
-out_dict = OUT_DIR / "dict_individus.csv"
-dict_df.to_csv(out_dict, index=False, encoding="utf-8-sig")
-print(f"  >> Dictionnaire exporte : {out_dict}  ({len(dict_df)} variables)")
-
-# ── 3. Apercu (100 premieres lignes) ──────────────────────────────────────────
-print("Chargement des 100 premieres lignes pour apercu ...")
-df_sample, _ = pyreadstat.read_sav(
-    str(INPUT_SAV),
-    row_limit=100,
-    apply_value_formats=False,
-)
-out_apercu = OUT_DIR / "apercu_individus.csv"
-df_sample.to_csv(out_apercu, index=False, encoding="utf-8-sig")
-print(f"  >> Apercu exporte : {out_apercu}  ({df_sample.shape})")
-
-# ── 4. Resume console ─────────────────────────────────────────────────────────
-print("\n" + "="*60)
-print(f"  Nombre total de variables : {len(dict_df)}")
-print(f"  Variables avec labels     : {(dict_df['n_modalites'] > 0).sum()}")
-print(f"  Colonnes de l apercu      : {list(df_sample.columns)}")
-print("="*60)
-print("\nDone. Verifiez output/dict/dict_individus.csv")
+if __name__ == "__main__":
+    main()

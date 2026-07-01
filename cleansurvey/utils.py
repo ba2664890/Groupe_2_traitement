@@ -1,458 +1,343 @@
-"""
-utils.py
-=========
-Fonctions utilitaires réutilisables pour le pipeline RGPH.
-
-Toutes les fonctions sont conçues pour être indépendantes du recensement :
-elles ne font référence à aucun nom de variable brute. Seul config.py
-contient les références aux variables spécifiques au recensement traité.
-"""
-
-import sys
-import json
-import pathlib
-import warnings
-from typing import Dict, List, Optional, Tuple, Any
-
-import numpy as np
+# Utilitaires généraux pour le pipeline de traitement des données
+import os
 import pandas as pd
+import numpy as np
 import pyreadstat
-import openpyxl
-from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
-from openpyxl.utils import get_column_letter
+import logging
+from typing import List, Dict, Tuple
 
-warnings.filterwarnings("ignore", category=FutureWarning)
+# Configuration du logger
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 1. CHARGEMENT DES DONNÉES
-# ══════════════════════════════════════════════════════════════════════════════
-
-def load_sav(path: pathlib.Path,
-             row_limit: Optional[int] = None,
-             apply_formats: bool = False,
-             cols: Optional[List[str]] = None) -> Tuple[pd.DataFrame, Any]:
+def load_sav_metadata(file_path: str) -> pd.DataFrame:
     """
-    Charge un fichier SPSS .sav avec pyreadstat.
-
-    Parameters
-    ----------
-    path         : chemin vers le fichier .sav
-    row_limit    : nombre max de lignes à lire (None = tout)
-    apply_formats: appliquer les étiquettes de valeur SPSS (True) ou
-                   conserver les codes numériques (False)
-    cols         : liste de colonnes à sélectionner (None = toutes)
-
-    Returns
-    -------
-    (df, meta)   : DataFrame et objet métadonnées pyreadstat
+    Lit uniquement les métadonnées d'un fichier .sav (très rapide et économe en mémoire).
+    Retourne un DataFrame structuré.
     """
-    kwargs = dict(
-        apply_value_formats=apply_formats,
-    )
-    if row_limit:
-        kwargs["row_limit"] = row_limit
-    if cols:
-        kwargs["usecols"] = cols
+    _, meta = pyreadstat.read_sav(file_path, metadataonly=True)
+    
+    # Extraire les types des variables
+    # Dans pyreadstat, readstat_variable_types est un dictionnaire var_name -> type
+    var_types = meta.readstat_variable_types
+    
+    dict_init = []
+    for var in meta.column_names:
+        label = meta.column_names_to_labels.get(var, "")
+        vtype = var_types.get(var, "unknown")
+        
+        # Déterminer un type simplifié
+        if var in meta.variable_value_labels:
+            type_sim = "factor"
+        elif vtype in ["double", "float", "numeric", "integer"]:
+            type_sim = "numeric"
+        else:
+            type_sim = "character"
+            
+        dict_init.append({
+            "var_orig": var,
+            "label_orig": label,
+            "type_orig": vtype,
+            "type_suggested": type_sim
+        })
+        
+    return pd.DataFrame(dict_init)
 
-    print(f"[load_sav] Chargement de {path.name} ...")
-    df, meta = pyreadstat.read_sav(str(path), **kwargs)
-    print(f"  >> {df.shape[0]:,} lignes x {df.shape[1]} colonnes chargees")
+def load_sav_data(file_path: str, columns: List[str] = None) -> Tuple[pd.DataFrame, any]:
+    """
+    Charge les données d'un fichier .sav, éventuellement filtrées par colonnes
+    pour réduire l'empreinte mémoire.
+    """
+    logging.info(f"Chargement des données de {os.path.basename(file_path)}...")
+    df, meta = pyreadstat.read_sav(file_path, usecols=columns)
+    logging.info(f"✔ Chargé : {df.shape[0]:,} lignes | {df.shape[1]:,} colonnes")
     return df, meta
 
-
-def get_metadata(path: pathlib.Path) -> Any:
-    """Lit uniquement les métadonnées (très rapide, sans charger les données)."""
-    _, meta = pyreadstat.read_sav(str(path), metadataonly=True)
-    return meta
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 2. RENOMMAGE ET SÉLECTION DES VARIABLES
-# ══════════════════════════════════════════════════════════════════════════════
-
-def select_and_rename(df: pd.DataFrame,
-                      rename_map: Dict[str, str],
-                      keep_unmapped: bool = False) -> pd.DataFrame:
+def apply_var_dictionary(df: pd.DataFrame, dict_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Sélectionne et renomme les colonnes selon rename_map.
-
-    Parameters
-    ----------
-    df           : DataFrame source
-    rename_map   : {nom_brut: nom_normalise}
-    keep_unmapped: garder les colonnes absentes de rename_map
-
-    Returns
-    -------
-    DataFrame avec uniquement les colonnes sélectionnées et renommées
+    Applique le dictionnaire de variables :
+    1. Filtre les variables où keep == 'yes'
+    2. Renomme les variables de var_orig vers var_new
+    3. Convertit les types selon type_new (numeric, factor, character)
     """
-    # Colonnes présentes dans le DataFrame et dans le mapping
-    present = {k: v for k, v in rename_map.items() if k in df.columns}
-    absent  = [k for k in rename_map if k not in df.columns]
+    # Filtrer le dictionnaire
+    dict_filtered = dict_df[dict_df['keep'].str.lower() == 'yes'].copy()
+    
+    # Garder uniquement les colonnes du dictionnaire qui existent dans le df
+    existing_vars = [v for v in dict_filtered['var_orig'] if v in df.columns]
+    dict_filtered = dict_filtered[dict_filtered['var_orig'].isin(existing_vars)]
+    
+    # Sélectionner les variables
+    df = df[existing_vars].copy()
+    
+    # Créer le dictionnaire de renommage
+    rename_map = dict(zip(dict_filtered['var_orig'], dict_filtered['var_new']))
+    df = df.rename(columns=rename_map)
+    
+    # Appliquer le typage
+    for _, row in dict_filtered.iterrows():
+        var_name = row['var_new']
+        var_type = str(row['type_new']).lower().strip()
+        
+        if var_name not in df.columns:
+            continue
+            
+        if var_type == 'numeric':
+            df[var_name] = pd.to_numeric(df[var_name], errors='coerce')
+        elif var_type == 'character':
+            df[var_name] = df[var_name].apply(lambda x: str(x).strip() if pd.notna(x) else x)
+        elif var_type == 'factor':
+            # Garder au format numérique/catégoriel pour l'application ultérieure du dictionnaire de modalités
+            df[var_name] = pd.to_numeric(df[var_name], errors='coerce')
+            
+    logging.info(f"Dictionnaire appliqué : {df.shape[1]} colonnes conservées et renommées.")
+    return df
 
-    if absent:
-        print(f"  [WARN] Variables absentes du fichier : {absent}")
+def apply_modality_dictionary(df: pd.DataFrame, dict_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Applique le dictionnaire de modalités pour remplacer les codes de catégorie par leurs libellés.
+    Le dictionnaire dict_df doit avoir les colonnes : var_name, code, label_new.
+    """
+    logging.info("Application du dictionnaire de modalités...")
+    # Grouper par variable
+    vars_in_dict = dict_df['var_name'].unique()
+    
+    for var in vars_in_dict:
+        if var not in df.columns:
+            continue
+            
+        var_dict = dict_df[dict_df['var_name'] == var]
+        
+        # Créer le dictionnaire de mapping (attention aux types des clés, souvent float ou int)
+        mapping = {}
+        for _, row in var_dict.iterrows():
+            try:
+                code_val = float(row['code'])
+                # Si c'est un entier représenté en float, on le gère
+                if code_val.is_integer():
+                    mapping[int(code_val)] = str(row['label_new'])
+                mapping[code_val] = str(row['label_new'])
+            except ValueError:
+                # Si le code n'est pas numérique
+                mapping[row['code']] = str(row['label_new'])
+                mapping[str(row['code']).strip()] = str(row['label_new'])
+        
+        # Pour les valeurs manquantes ou non mappées, conserver ou mettre à NaN
+        # Optionnel: on applique le mapping
+        # On convertit d'abord la colonne pour correspondre au mieux
+        df[var] = df[var].map(mapping).fillna(df[var])
+        logging.info(f"  Modalités appliquées pour '{var}' : {len(mapping)} catégories mappées.")
+        
+    return df
 
-    if keep_unmapped:
-        # Garder tout + renommer ce qui est dans le mapping
-        return df.rename(columns=present)
+def dedup(df: pd.DataFrame, key_cols: List[str]) -> pd.DataFrame:
+    """
+    Supprime les doublons basés sur les colonnes clés.
+    """
+    n_before = len(df)
+    df = df.drop_duplicates(subset=key_cols, keep='first')
+    n_after = len(df)
+    n_dup = n_before - n_after
+    if n_dup > 0:
+        logging.info(f"  [dedup] {n_dup} doublons supprimés sur les clés ({', '.join(key_cols)})")
     else:
-        # Sélectionner uniquement les colonnes dans le mapping
-        df_out = df[list(present.keys())].rename(columns=present)
-        return df_out
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 3. TRAITEMENT DES VALEURS MANQUANTES
-# ══════════════════════════════════════════════════════════════════════════════
-
-def flag_and_nullify_missing(df: pd.DataFrame,
-                             missing_codes: Dict[str, List],
-                             flag_col_suffix: str = "_flag_miss") -> pd.DataFrame:
-    """
-    Pour chaque variable, remplace les codes "manquant" par NaN et
-    crée une colonne indicatrice de valeur manquante originellement.
-
-    Parameters
-    ----------
-    df              : DataFrame
-    missing_codes   : {nom_colonne: [codes_manquants]}
-    flag_col_suffix : suffixe pour les colonnes indicatrices
-
-    Returns
-    -------
-    DataFrame enrichi avec les colonnes flag et les codes remplacés par NaN
-    """
-    df = df.copy()
-    for col, codes in missing_codes.items():
-        if col not in df.columns:
-            continue
-        mask = df[col].isin(codes)
-        flag_col = col + flag_col_suffix
-        df[flag_col] = mask.astype(int)
-        df.loc[mask, col] = np.nan
+        logging.info(f"  [dedup] Aucun doublon sur ({', '.join(key_cols)})")
     return df
 
-
-def missing_summary(df: pd.DataFrame) -> pd.DataFrame:
+def drop_vars(df: pd.DataFrame, params: dict) -> pd.DataFrame:
     """
-    Retourne un tableau résumé des valeurs manquantes par colonne.
-
-    Returns
-    -------
-    DataFrame avec colonnes : variable, n_total, n_manquants, pct_manquants
+    Supprime les variables spécifiées et les variables constantes.
     """
-    total = len(df)
-    rows  = []
+    to_drop = [c for c in params.get('vars_to_drop', []) if c in df.columns]
+    
+    # Identifier les colonnes constantes (un seul élément non nul)
+    constant_cols = []
     for col in df.columns:
-        if col.endswith("_flag_miss"):
+        if col in key_cols_global:
             continue
-        n_miss = df[col].isna().sum()
-        rows.append({
-            "variable"      : col,
-            "n_total"       : total,
-            "n_manquants"   : int(n_miss),
-            "pct_manquants" : round(100 * n_miss / total, 2) if total > 0 else 0,
-        })
-    return pd.DataFrame(rows).sort_values("pct_manquants", ascending=False)
+        non_na = df[col].dropna()
+        if len(non_na.unique()) <= 1:
+            constant_cols.append(col)
+            
+    all_drop = list(set(to_drop + constant_cols))
+    if all_drop:
+        logging.info(f"  [drop_vars] Suppression de {len(all_drop)} colonnes: {', '.join(all_drop)}")
+        df = df.drop(columns=all_drop)
+    return df
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 4. TRAITEMENT DES VALEURS ABERRANTES
-# ══════════════════════════════════════════════════════════════════════════════
-
-def flag_outliers(df: pd.DataFrame,
-                  valid_ranges: Dict[str, Tuple[float, float]],
-                  action: str = "nullify",
-                  flag_col_suffix: str = "_flag_outlier") -> pd.DataFrame:
+def normalize_categ(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Détecte et traite les valeurs hors plage pour les variables numériques.
-
-    Parameters
-    ----------
-    df              : DataFrame
-    valid_ranges    : {nom_col: (min_val, max_val)}
-    action          : "nullify" (remplacer par NaN) ou "flag_only"
-    flag_col_suffix : suffixe pour les colonnes indicatrices
-
-    Returns
-    -------
-    DataFrame enrichi
+    Normalise les variables de type chaîne (nettoyage d'espaces).
     """
-    df = df.copy()
-    for col, (vmin, vmax) in valid_ranges.items():
-        if col not in df.columns:
+    char_cols = df.select_dtypes(include=['object']).columns
+    for col in char_cols:
+        df[col] = df[col].apply(lambda x: ' '.join(str(x).split()) if pd.notna(x) else x)
+    if len(char_cols) > 0:
+        logging.info(f"  [normalize_categ] Normalisation des espaces sur {len(char_cols)} colonnes de type texte")
+    return df
+
+def bound_numeric(df: pd.DataFrame, params: dict) -> pd.DataFrame:
+    """
+    Applique les bornes numériques. Les valeurs hors bornes sont remplacées par NaN.
+    """
+    bounds = params.get('numeric_bounds', {})
+    report = []
+    for var, limit in bounds.items():
+        if var in df.columns:
+            lo, hi = limit
+            df[var] = pd.to_numeric(df[var], errors='coerce')
+            n_before = df[var].notna().sum()
+            
+            # Mettre hors bornes à NaN
+            df[var] = np.where((df[var] < lo) | (df[var] > hi), np.nan, df[var])
+            
+            n_after = df[var].notna().sum()
+            n_out = n_before - n_after
+            if n_out > 0:
+                report.append(f"{var} : {n_out} valeur(s) hors bornes [{lo}, {hi}] -> NaN")
+                
+    if report:
+        logging.info("  [bound_numeric]")
+        for r in report:
+            logging.info(f"    {r}")
+    return df
+
+def apply_consistency_rules(df: pd.DataFrame, params: dict) -> pd.DataFrame:
+    """
+    Applique les règles de cohérence logique définies dans la configuration.
+    """
+    rules = params.get('consistency_rules', [])
+    for rule in rules:
+        label = rule['label']
+        cond_str = rule['condition']
+        target = rule['target']
+        action = rule['action']
+        
+        if target not in df.columns:
             continue
-        mask = (df[col] < vmin) | (df[col] > vmax)
-        flag_col = col + flag_col_suffix
-        df[flag_col] = mask.astype(int)
-        if action == "nullify":
-            df.loc[mask, col] = np.nan
-    return df
-
-
-def outlier_summary(df: pd.DataFrame,
-                    flag_col_suffix: str = "_flag_outlier") -> pd.DataFrame:
-    """
-    Résume les valeurs aberrantes détectées.
-
-    Returns
-    -------
-    DataFrame : variable | n_aberrants | pct_aberrants
-    """
-    rows = []
-    total = len(df)
-    flag_cols = [c for c in df.columns if c.endswith(flag_col_suffix)]
-    for fc in flag_cols:
-        var = fc.replace(flag_col_suffix, "")
-        n   = int(df[fc].sum())
-        rows.append({
-            "variable"     : var,
-            "n_aberrants"  : n,
-            "pct_aberrants": round(100 * n / total, 2) if total > 0 else 0,
-        })
-    return pd.DataFrame(rows).sort_values("n_aberrants", ascending=False)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 5. RECODAGE DES MODALITÉS
-# ══════════════════════════════════════════════════════════════════════════════
-
-def apply_recodings(df: pd.DataFrame,
-                    recodings: Dict[str, Dict]) -> pd.DataFrame:
-    """
-    Applique les mappings de recodage (code numérique -> étiquette texte).
-
-    Parameters
-    ----------
-    df        : DataFrame
-    recodings : {nom_col: {code: etiquette}}
-
-    Returns
-    -------
-    DataFrame recodé
-    """
-    df = df.copy()
-    for col, mapping in recodings.items():
-        if col not in df.columns:
-            continue
-        df[col] = df[col].map(mapping).where(df[col].notna(), np.nan)
-    return df
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 6. DÉRIVATION DE VARIABLES
-# ══════════════════════════════════════════════════════════════════════════════
-
-def compute_groupe_age(df: pd.DataFrame,
-                       age_col: str,
-                       bins: List[int],
-                       labels: List[str],
-                       out_col: str = "groupe_age") -> pd.DataFrame:
-    """Crée une variable groupes d'âge à partir de l'âge révolu."""
-    df = df.copy()
-    if age_col not in df.columns:
-        print(f"  [WARN] Colonne age '{age_col}' absente.")
-        return df
-    df[out_col] = pd.cut(df[age_col], bins=bins, labels=labels, right=False)
-    return df
-
-
-def compute_alphabetisation(df: pd.DataFrame,
-                             alpha_cols: List[str],
-                             alpha_oui_code,
-                             out_col: str = "alphabetise") -> pd.DataFrame:
-    """
-    Crée une variable binaire 'alphabetise' = True si alphabétisé
-    dans au moins une langue.
-
-    Parameters
-    ----------
-    alpha_cols     : liste des colonnes d'alphabétisation (une par langue)
-    alpha_oui_code : valeur représentant "Oui" dans ces colonnes
-    """
-    df = df.copy()
-    present = [c for c in alpha_cols if c in df.columns]
-    if not present:
-        print(f"  [WARN] Aucune colonne d'alphabetisation trouvee.")
-        return df
-    # True si au moins une langue = code "Oui"
-    df[out_col] = df[present].apply(
-        lambda row: any(v == alpha_oui_code for v in row if pd.notna(v)),
-        axis=1
-    ).astype(int)
-    return df
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 7. CONTRÔLES DE COHÉRENCE
-# ══════════════════════════════════════════════════════════════════════════════
-
-def run_coherence_checks(df: pd.DataFrame,
-                         checks: List[Dict]) -> pd.DataFrame:
-    """
-    Exécute les contrôles de cohérence et retourne un tableau de résultats.
-
-    Parameters
-    ----------
-    checks : liste de dicts {nom, description, condition (expression pandas)}
-
-    Returns
-    -------
-    DataFrame : nom | description | n_violations | pct_violations
-    """
-    results = []
-    total   = len(df)
-    for chk in checks:
+            
+        # Évaluer la condition en créant un masque booléen
         try:
-            mask     = df.eval(chk["condition"])
-            n_viol   = int(mask.sum())
-            pct_viol = round(100 * n_viol / total, 2) if total > 0 else 0
+            # Remplacer les opérateurs logiques par les opérateurs pandas si besoin, ou utiliser eval de pandas
+            # pandas df.eval() évalue des expressions complexes
+            mask = df.eval(cond_str)
+            n_flagged = mask.sum()
+            
+            if n_flagged > 0:
+                if action == 'na':
+                    df.loc[mask, target] = np.nan
+                    logging.info(f"  [consistency] '{label}' : {n_flagged} ligne(s) -> NaN sur {target}")
+                else:
+                    # Remplacer par une valeur spécifique
+                    df.loc[mask, target] = action
+                    logging.info(f"  [consistency] '{label}' : {n_flagged} ligne(s) corrigée(s) à '{action}' sur {target}")
         except Exception as e:
-            n_viol   = -1
-            pct_viol = -1
-            print(f"  [WARN] Controle '{chk['nom']}' non evalue : {e}")
-        results.append({
-            "nom"           : chk["nom"],
-            "description"   : chk["description"],
-            "n_violations"  : n_viol,
-            "pct_violations": pct_viol,
-        })
-    return pd.DataFrame(results)
+            logging.warning(f"  [consistency] Erreur d'évaluation pour la règle '{label}' : {e}")
+            
+    return df
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 8. DISTRIBUTIONS (pour le QAQC)
-# ══════════════════════════════════════════════════════════════════════════════
-
-def compute_distribution(df: pd.DataFrame,
-                         col: str,
-                         normalize: bool = True) -> pd.DataFrame:
+def impute_numeric(df: pd.DataFrame, params: dict) -> pd.DataFrame:
     """
-    Calcule la distribution (effectifs et %) d'une variable catégorielle.
+    Impute les valeurs numériques manquantes.
     """
-    if col not in df.columns:
-        return pd.DataFrame()
-    vc = df[col].value_counts(dropna=False)
-    result = pd.DataFrame({"modalite": vc.index, "effectif": vc.values})
-    if normalize:
-        result["pourcentage"] = (result["effectif"] / result["effectif"].sum() * 100).round(2)
-    result.insert(0, "variable", col)
-    return result
+    strategies = params.get('numeric_impute', {})
+    for var, strat in strategies.items():
+        if var in df.columns:
+            n_na = df[var].isna().sum()
+            if n_na == 0 or strat == 'none':
+                continue
+                
+            if strat == 'median':
+                fill_val = df[var].median()
+            elif strat == 'mean':
+                fill_val = df[var].mean()
+            elif strat == 'zero':
+                fill_val = 0
+            else:
+                fill_val = np.nan
+                
+            if not pd.isna(fill_val):
+                df[var] = df[var].fillna(fill_val)
+                logging.info(f"  [impute_numeric] {var} : {n_na} NA imputées par {strat} ({round(fill_val, 2)})")
+    return df
 
-
-def compute_all_distributions(df: pd.DataFrame,
-                               cat_cols: List[str]) -> pd.DataFrame:
-    """Calcule les distributions de toutes les colonnes catégorielles listées."""
-    frames = [compute_distribution(df, col) for col in cat_cols if col in df.columns]
-    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-# 9. GÉNÉRATION DU FICHIER QAQC EXCEL
-# ══════════════════════════════════════════════════════════════════════════════
-
-def _style_header(ws, row: int = 1,
-                  fill_color: str = "1F4E79",
-                  font_color: str = "FFFFFF"):
-    """Stylise la ligne d'en-tête d'une feuille Excel."""
-    fill = PatternFill(start_color=fill_color, end_color=fill_color, fill_type="solid")
-    font = Font(color=font_color, bold=True)
-    for cell in ws[row]:
-        cell.fill = fill
-        cell.font = font
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-    ws.row_dimensions[row].height = 18
-
-
-def _auto_col_width(ws, min_width: int = 12, max_width: int = 45):
-    """Ajuste automatiquement la largeur des colonnes."""
-    for col_cells in ws.columns:
-        length = max(
-            len(str(c.value)) if c.value is not None else 0
-            for c in col_cells
-        )
-        col_letter = get_column_letter(col_cells[0].column)
-        ws.column_dimensions[col_letter].width = max(min_width, min(length + 2, max_width))
-
-
-def _df_to_sheet(wb: openpyxl.Workbook,
-                 sheet_name: str,
-                 df: pd.DataFrame,
-                 fill_color: str = "1F4E79"):
-    """Écrit un DataFrame dans un onglet Excel avec mise en forme."""
-    if sheet_name in wb.sheetnames:
-        del wb[sheet_name]
-    ws = wb.create_sheet(title=sheet_name)
-    # En-têtes
-    ws.append(list(df.columns))
-    _style_header(ws, row=1, fill_color=fill_color)
-    # Données
-    for row in df.itertuples(index=False):
-        ws.append(list(row))
-    # Zebra stripes
-    fill_light = PatternFill(start_color="EFF3FB", end_color="EFF3FB", fill_type="solid")
-    for i, row in enumerate(ws.iter_rows(min_row=2), start=2):
-        if i % 2 == 0:
-            for cell in row:
-                cell.fill = fill_light
-    _auto_col_width(ws)
-
-
-def generate_qaqc(
-    df_clean         : pd.DataFrame,
-    df_missing       : pd.DataFrame,
-    df_outliers      : pd.DataFrame,
-    df_distributions : pd.DataFrame,
-    df_coherence     : pd.DataFrame,
-    df_estimations   : pd.DataFrame,
-    output_path      : pathlib.Path,
-    n_raw            : int = 0,
-):
+def impute_categ(df: pd.DataFrame, params: dict) -> pd.DataFrame:
     """
-    Génère le fichier QAQC Excel avec 6 onglets.
-
-    Parameters
-    ----------
-    df_clean        : DataFrame nettoyé final
-    df_missing      : résumé des valeurs manquantes
-    df_outliers     : résumé des valeurs aberrantes
-    df_distributions: distributions des variables catégorielles
-    df_coherence    : résultats des contrôles de cohérence
-    df_estimations  : indicateurs primaires
-    output_path     : chemin de sortie .xlsx
-    n_raw           : nombre de lignes brutes avant nettoyage
+    Impute les valeurs catégorielles manquantes.
     """
-    import datetime
-    wb = openpyxl.Workbook()
+    strategies = params.get('categ_impute', {})
+    for var, strat in strategies.items():
+        if var in df.columns:
+            n_na = df[var].isna().sum()
+            if n_na == 0 or strat == 'none':
+                continue
+                
+            if strat == 'mode':
+                mode_series = df[var].mode()
+                fill_val = mode_series.iloc[0] if not mode_series.empty else 'Unknown'
+            else:
+                fill_val = strat
+                
+            df[var] = df[var].fillna(fill_val)
+            logging.info(f"  [impute_categ] {var} : {n_na} NA imputées par '{fill_val}'")
+    return df
 
-    # ── Onglet 1 : Résumé ────────────────────────────────────────────────────
-    ws_sum = wb.active
-    ws_sum.title = "Resume"
-    infos = [
-        ("Date de traitement"         , datetime.datetime.now().strftime("%Y-%m-%d %H:%M")),
-        ("Fichier source"             , "dixieme_RGPH_5_indiv_SECTION_B.sav"),
-        ("N lignes brutes"            , n_raw),
-        ("N lignes apres nettoyage"   , len(df_clean)),
-        ("N variables produites"      , df_clean.shape[1]),
-        ("N variables avec manquants" , int((df_missing["n_manquants"] > 0).sum())),
-        ("N controles coherence"      , len(df_coherence)),
-        ("N violations coherence"     , int(df_coherence["n_violations"].clip(lower=0).sum())),
-    ]
-    ws_sum.append(["Indicateur", "Valeur"])
-    _style_header(ws_sum, row=1, fill_color="1F4E79")
-    for row in infos:
-        ws_sum.append(list(row))
-    _auto_col_width(ws_sum)
+# Variable globale pour garder la trace des clés primaires lors de la suppression des constantes
+key_cols_global = []
 
-    # ── Onglets 2-6 ──────────────────────────────────────────────────────────
-    _df_to_sheet(wb, "Manquants"          , df_missing      , fill_color="C55A11")
-    _df_to_sheet(wb, "Aberrants"          , df_outliers      , fill_color="843C0C")
-    _df_to_sheet(wb, "Distributions"      , df_distributions , fill_color="1F4E79")
-    _df_to_sheet(wb, "Coherence"          , df_coherence     , fill_color="375623")
-    _df_to_sheet(wb, "Estimations"        , df_estimations   , fill_color="7030A0")
+def run_cleaning_pipeline(df: pd.DataFrame, params: dict, key_cols: List[str], label: str = "") -> pd.DataFrame:
+    """
+    Orchestre tout le pipeline de nettoyage.
+    """
+    global key_cols_global
+    key_cols_global = key_cols
+    
+    logging.info(f"\n============================================================")
+    logging.info(f"Nettoyage : {label} ({df.shape[0]:,} lignes x {df.shape[1]} colonnes)")
+    logging.info(f"============================================================")
+    
+    df = dedup(df, key_cols)
+    df = drop_vars(df, params)
+    df = normalize_categ(df)
+    df = bound_numeric(df, params)
+    df = apply_consistency_rules(df, params)
+    df = impute_numeric(df, params)
+    df = impute_categ(df, params)
+    
+    logging.info(f"Résultat final {label} : {df.shape[0]:,} lignes x {df.shape[1]} colonnes\n")
+    return df
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(str(output_path))
-    print(f"  >> QAQC Excel sauvegarde : {output_path}")
+def resolve_duplicates(df_hh: pd.DataFrame, df_ind: pd.DataFrame, params: dict) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Résout les doublons de colonnes entre HH et IND.
+    """
+    strategies = params.get('duplicate_cols_strategy', {})
+    suffixes = params.get('suffixes', ('_hh', '_ind'))
+    
+    common_cols = set(df_hh.columns).intersection(set(df_ind.columns))
+    # Ne pas considérer la clé de jointure commune
+    join_key = 'men_id'
+    common_cols.discard(join_key)
+    common_cols.discard('numind') # clé secondaire
+    
+    for col in common_cols:
+        strat = strategies.get(col, 'both')
+        if strat == 'hh':
+            df_ind = df_ind.drop(columns=[col])
+            logging.info(f"  [duplicates] '{col}' : version HH conservée, version IND supprimée")
+        elif strat == 'ind':
+            df_hh = df_hh.drop(columns=[col])
+            logging.info(f"  [duplicates] '{col}' : version IND conservée, version HH supprimée")
+        elif strat == 'both':
+            df_hh = df_hh.rename(columns={col: f"{col}{suffixes[0]}"})
+            df_ind = df_ind.rename(columns={col: f"{col}{suffixes[1]}"})
+            logging.info(f"  [duplicates] '{col}' : renommée en '{col}{suffixes[0]}' (HH) et '{col}{suffixes[1]}' (IND)")
+            
+    return df_hh, df_ind
+
+def section_header(titre: str) -> None:
+    """Affiche un séparateur de section dans la console."""
+    print(f"\n{'=' * 55}")
+    # '=' * 55 - répète le caractère '=' 55 fois
+    # Produit : =======================================================
+    print(f"  {titre}")
+    print(f"{'=' * 55}")

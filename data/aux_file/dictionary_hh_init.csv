@@ -1,0 +1,243 @@
+var_orig,label_orig,type_orig,type_suggested,var_new,type_new,keep
+men_id,Identifiant unique ménage,double,numeric,men_id,numeric,yes
+A01,Région,string,factor,A01,factor,yes
+A02,Département,string,factor,A02,factor,yes
+A03,Arrondissement/Ville,string,factor,A03,factor,yes
+A04,Commune,string,factor,A04,factor,yes
+A06,Idenifiant du DR,string,character,A06,character,no
+A08B,Nombre de ménage dans la concession,double,numeric,A08B,numeric,no
+A09,Numéro du ménage,double,numeric,A09,numeric,no
+A10,Milieu de résidence,double,factor,A10,factor,yes
+A11,Type de ménage,double,factor,A11,factor,no
+A11A,Type de ménage collectif,double,factor,A11A,factor,no
+A11A_AUTRES,Autres types de ménages collectifs,string,character,A11A_AUTRES,character,no
+E01,Type de logement,double,factor,E01,factor,no
+E01_BIS,Type de Logement_recode,double,factor,E01_BIS,factor,no
+E01_AUTRE,Préciser autre type de logement,string,character,E01_AUTRE,character,no
+E02,Nombre de pieces à usage d'habitation,double,numeric,E02,numeric,no
+E03A,Statut d'occupation,double,factor,E03A,factor,no
+E03A_AUTRE,Préciser autre statut d'occupation,string,character,E03A_AUTRE,character,no
+E03B,Type de titre de propriété,double,factor,E03B,factor,no
+E03B_AUTRE,Autre type de titre de propriété,string,character,E03B_AUTRE,character,no
+E04,Mode d'acquisition du logement,double,factor,E04,factor,no
+E04_AUTRE,Préciser autre mode d'acquisition du logement,string,character,E04_AUTRE,character,no
+E05,Nature du mur et revêtement du bâtiment principal,double,factor,E05,factor,no
+E05_AUTRE,Préciser autre nature du mur,string,character,E05_AUTRE,character,no
+E06,Nature du toit et revêtement du bâtiment principal,double,factor,E06,factor,no
+E06_AUTRE,Préciser autre nature du toit,string,character,E06_AUTRE,character,no
+E07,Nature du sol et revêtement du bâtiment principal,double,factor,E07,factor,no
+E07_AUTRE,Préciser autre nature du sol,string,character,E07_AUTRE,character,no
+E08A,Principal type d'aisance,double,factor,E08A,factor,no
+E08A_AUTRE,Préciser autre type d'aisance,string,character,E08A_AUTRE,character,no
+E08B,Partage des toilettes avec d'autres ménages,double,factor,E08B,factor,no
+E09,Principal mode dapprovisionnement en eau,double,factor,E09,factor,no
+E09_AUTRE,Préciser autre mode d'approvisionnement en eau,string,character,E09_AUTRE,character,no
+E10,Doù provient principalement leau que boivent les membres de votre ménage ?,double,factor,E10,factor,no
+E11,Principal mode déclairage,double,factor,E11,factor,no
+E11_AUTRE,Préciser autre mode d'éclairage,string,character,E11_AUTRE,character,no
+E12,Principal combustible pour la cuisson,double,factor,E12,factor,no
+E12_AUTRE,Préciser autre combustible pour la cuisson,string,character,E12_AUTRE,character,no
+E13_1,Radio,double,factor,E13_1,factor,no
+E13_2,Téléviseur,double,factor,E13_2,factor,no
+E13_3,Réfrig/congélat/frigo,double,factor,E13_3,factor,no
+E13_4,Téléphone fixe,double,factor,E13_4,factor,no
+E13_5,Téléphone mobile,double,factor,E13_5,factor,no
+E13_6,Foyer amélioré moderne charbon,double,factor,E13_6,factor,no
+E13_7,Foyer amélioré moderne bois,double,factor,E13_7,factor,no
+E13_8,Foyer amélioré traditionnel charbon,double,factor,E13_8,factor,no
+E13_9,Foyer amélioré traditionnel bois,double,factor,E13_9,factor,no
+E13_10,Climatiseur,double,factor,E13_10,factor,no
+E13_11,Machine à coudre,double,factor,E13_11,factor,no
+E13_12,Ventilateur,double,factor,E13_12,factor,no
+E13_13,"Abonnement/Connexion Internet (Cable ADSL, Box Wifi/Modem/Routeur, fibre optique,Forfait)",double,factor,E13_13,factor,no
+E13_14,Ordinateur fixe/Ordinateur portable,double,factor,E13_14,factor,no
+E13_15,Plaque solaire,double,factor,E13_15,factor,no
+E13_16,Groupe électrogène,double,factor,E13_16,factor,no
+E13_17,Fax,double,factor,E13_17,factor,no
+E13_18,Fer à repasser électrique,double,factor,E13_18,factor,no
+E13_19,Fer à repasser à charbon,double,factor,E13_19,factor,no
+E13_20,Chauffe eau,double,factor,E13_20,factor,no
+E13_21,Cuisinière,double,factor,E13_21,factor,no
+E13_22,Machine à laver,double,factor,E13_22,factor,no
+E13_23,Micro-onde,double,factor,E13_23,factor,no
+E13_24,Bonbonne de gaz,double,factor,E13_24,factor,no
+E14_1,Voiture,double,factor,E14_1,factor,no
+E14_2,Mobylette/motocyclette,double,factor,E14_2,factor,no
+E14_3,Bicyclette,double,factor,E14_3,factor,no
+E14_4,Caléche/Charrette,double,factor,E14_4,factor,no
+E14_5,Pirogue,double,factor,E14_5,factor,no
+E14_6,A dos d'animaux,double,factor,E14_6,factor,no
+E15_1,Houe/Charue,double,factor,E15_1,factor,no
+E15_2,Semoir,double,factor,E15_2,factor,no
+E15_3,Hilaire/Daba/Cadiandou,double,factor,E15_3,factor,no
+E15_4,Caléche/Charrette,double,factor,E15_4,factor,no
+E15_5,Animaux de trait,double,factor,E15_5,factor,no
+E15_6,Tracteur,double,factor,E15_6,factor,no
+E15_7,Voiture/Camion,double,factor,E15_7,factor,no
+E15_8,Mobylette/motocyclette,double,factor,E15_8,factor,no
+E15_9,Pirogue,double,factor,E15_9,factor,no
+E15_10,Filet,double,factor,E15_10,factor,no
+E15_11,Réfrig/congélat,double,factor,E15_11,factor,no
+E15_12,Machine à coudre,double,factor,E15_12,factor,no
+E15_13,Matériel de musique,double,factor,E15_13,factor,no
+E15_14,Chaises,double,factor,E15_14,factor,no
+E15_15,Bâches,double,factor,E15_15,factor,no
+E15_16,Fax,double,factor,E15_16,factor,no
+E15_17,Portable (service de transfert),double,factor,E15_17,factor,no
+E15_18,Photocopieuse,double,factor,E15_18,factor,no
+E15_19,"Internet (Cable ADSL, Box Wifi/Modem/Routeur, fibre optique)",double,factor,E15_19,factor,no
+E15_20,Ordinateur,double,factor,E15_20,factor,no
+E15_21,Moulin,double,factor,E15_21,factor,no
+E15_22,Décortiqueuse,double,factor,E15_22,factor,no
+E15_23,Appareil photo/caméra,double,factor,E15_23,factor,no
+E15_24,Terrain,double,factor,E15_24,factor,no
+E15_25,Bâtiment,double,factor,E15_25,factor,no
+E15_26,Motopompe/Pompe immergée,double,factor,E15_26,factor,no
+E15_27,Presse à huile,double,factor,E15_27,factor,no
+E15_28,Groupe électrogène,double,factor,E15_28,factor,no
+E15_29,Ruche,double,factor,E15_29,factor,no
+E15_30,Pulvérisaseur,double,factor,E15_30,factor,no
+E15_31,Ustensiles de cuisines (pour cérémonie),double,factor,E15_31,factor,no
+E15_32,Matelas (location),double,factor,E15_32,factor,no
+E15_33,Plaque solaire,double,factor,E15_33,factor,no
+E15_34,Polyculteur,double,factor,E15_34,factor,no
+E16,Principal mode dévacuation des ordures ménagères,double,factor,E16,factor,no
+E16_AUTRE,Autre mode d'évacuation des ordures,string,character,E16_AUTRE,character,no
+E17A,Principal mode dévacuation des eaux usées,double,factor,E17A,factor,no
+E17A_AUTRE,Autre mode d'évacuation des eaux usées,string,character,E17A_AUTRE,character,no
+E17B,Principal mode dévacuation des boues de vidange,double,factor,E17B,factor,no
+E17B_AUTRE,Autre mode d'évacuation des boues de vidange,string,character,E17B_AUTRE,character,no
+E17C,Principal mode dévacuation des eaux de pluie,double,factor,E17C,factor,no
+E17C_AUTRE,Autre mode d'évacuation des eaux de pluie,string,character,E17C_AUTRE,character,no
+E18,"Au cours des 7 derniers jours, ménage sauté repas ?",double,factor,E18,factor,no
+E19,"Au cours des 12 derniers mois (en dehors des 7 derniers jrs), ménage sauté repas ?",double,factor,E19,factor,no
+E20,"Au cours des 12 derniers mois,membre du ménage pas reçu soins ?",double,factor,E20,factor,no
+E21,Un membre de votre ménage a-t-il reçu un transfert d’argent au cours de ces 12 derniers mois de la part d’une personne vivant à l’extérieur?,double,factor,E21,factor,no
+E22,De qui provient principalement le/les transfert(s) reçu(s) au cours des 12 derniers mois ?,double,factor,E22,factor,no
+E22_AUTRE,Autres source de transfert reçu,string,character,E22_AUTRE,character,no
+E23,Quel est le principal canal par lequel vous avez reçu ces transferts ?,double,factor,E23,factor,no
+E23_AUTRE,Autre canal de réception de transfert,string,character,E23_AUTRE,character,no
+E23A,Un membre de votre ménage a-t-il reçu un transfert d'argent au cours des 12 derniers mois de la part de l'Etat et/ou d'un ONG,double,factor,E23A,factor,no
+E23B,Nature du transfert,string,factor,E23B,factor,no
+E23B_AUTRE_ETAT,Autre transfert etat,string,character,E23B_AUTRE_ETAT,character,no
+E23B_AUTRE,Autres ntautre de tranfert,string,character,E23B_AUTRE,character,no
+B06,SEXE,double,factor,B06,factor,no
+Taille_men,,double,numeric,Taille_men,numeric,no
+COD_STRATE_P,Strate,double,factor,COD_STRATE_P,factor,no
+POIDS_STRATE_P,Pondération strate,double,factor,POIDS_STRATE_P,factor,no
+E01_6,autre,double,factor,E01_6,factor,no
+E01_1,case,double,factor,E01_1,factor,no
+E01_2,baraque,double,factor,E01_2,factor,no
+E01_3,Maison basse,double,factor,E01_3,factor,no
+E01_4,Maison à étage R+4,double,factor,E01_4,factor,no
+E01_5,Appartement dans un immeuble,double,factor,E01_5,factor,no
+E05_1,ciment,double,factor,E05_1,factor,no
+E05_2,ciment avec carreau,double,factor,E05_2,factor,no
+E05_3,ciment et marbre,double,factor,E05_3,factor,no
+E05_4,ciment avec bois,double,factor,E05_4,factor,no
+E05_5,ciment avec peinture,double,factor,E05_5,factor,no
+E05_6,crepitement,double,factor,E05_6,factor,no
+E05_7,bois,double,factor,E05_7,factor,no
+E05_8,banco,double,factor,E05_8,factor,no
+E05_9,banco+enduit ciment,double,factor,E05_9,factor,no
+E05_10,paille/tige,double,factor,E05_10,factor,no
+E05_11,Tôle/zinc,double,factor,E05_11,factor,no
+E05_99,Autre,double,factor,E05_99,factor,no
+E06_9,autre,double,factor,E06_9,factor,no
+E06_1,béton/dalle,double,factor,E06_1,factor,no
+E06_2,Beton avec faux plafond (en bois ou plâtre),double,factor,E06_2,factor,no
+E06_3,tuile/ardoise,double,factor,E06_3,factor,no
+E06_4,tuile/ardoise avec faux plafond (en bois ou tissu),double,factor,E06_4,factor,no
+E06_5,zinc/tôle,double,factor,E06_5,factor,no
+E06_6,Zinc avec faux plafond (en bois ou tissu),double,factor,E06_6,factor,no
+E06_7,chaume/paille,double,factor,E06_7,factor,no
+E06_8,Bois et banco,double,factor,E06_8,factor,no
+E07_1,carrelage,double,factor,E07_1,factor,no
+E07_2,carrelage avec tapis,double,factor,E07_2,factor,no
+E07_3,carrelage avec moquette,double,factor,E07_3,factor,no
+E07_4,ciment,double,factor,E07_4,factor,no
+E07_5,ciment avec tapis,double,factor,E07_5,factor,no
+E07_6,ciment avec moquette,double,factor,E07_6,factor,no
+E07_7,argile/banco,double,factor,E07_7,factor,no
+E07_8,argile/banc avec tapis,double,factor,E07_8,factor,no
+E07_9,sable,double,factor,E07_9,factor,no
+E07_10,Bois avec tapis,double,factor,E07_10,factor,no
+E07_11,Bois avec moquette,double,factor,E07_11,factor,no
+E07_99,Autre,double,factor,E07_99,factor,no
+E08A_11,Chasse raccordée à l’égout,double,factor,E08A_11,factor,no
+E08A_12,Chasse avec fosse,double,factor,E08A_12,factor,no
+E08A_21,Couverte,double,factor,E08A_21,factor,no
+E08A_22,non couverte,double,factor,E08A_22,factor,no
+E08A_23,Ventilée améliorée,double,factor,E08A_23,factor,no
+E08A_31,Edicule public,double,factor,E08A_31,factor,no
+E08A_41,Dans la nature,double,factor,E08A_41,factor,no
+E08A_51,Dans la nature,double,factor,E08A_51,factor,no
+E08A_99,Autre,double,factor,E08A_99,factor,no
+E10_11,Robinet dans logement,double,factor,E10_11,factor,no
+E10_12,Robinet dans cour/parcelle,double,factor,E10_12,factor,no
+E10_13,Robinet du voisin,double,factor,E10_13,factor,no
+E10_14,Robinet public/borne fontaine,double,factor,E10_14,factor,no
+E10_21,Puits à pompe ou forage,double,factor,E10_21,factor,no
+E10_31,Puits protégé,double,factor,E10_31,factor,no
+E10_32,Puits non protégé,double,factor,E10_32,factor,no
+E10_41,Source protégée,double,factor,E10_41,factor,no
+E10_42,Source non protégée,double,factor,E10_42,factor,no
+E10_51,Camion citerne,double,factor,E10_51,factor,no
+E10_61,Charrette avec petite citerne/tonneau,double,factor,E10_61,factor,no
+E10_71,Eau de surface,double,factor,E10_71,factor,no
+E10_81,Eau minérale,double,factor,E10_81,factor,no
+E10_91,Eau améliorée/purifiée,double,factor,E10_91,factor,no
+E11_1,Eléctricité SENELEC,double,factor,E11_1,factor,no
+E11_2,Woyofal SENELEC,double,factor,E11_2,factor,no
+E11_3,"Concession d""électrification rurale",double,factor,E11_3,factor,no
+E11_4,Solaire,double,factor,E11_4,factor,no
+E11_5,Groupe éléctrogène,double,factor,E11_5,factor,no
+E11_6,Gaz,double,factor,E11_6,factor,no
+E11_7,Lampe à pétrole artisanale,double,factor,E11_7,factor,no
+E11_8,Lampe tempête,double,factor,E11_8,factor,no
+E11_9,Lampe torche,double,factor,E11_9,factor,no
+E11_10,Bougie,double,factor,E11_10,factor,no
+E11_11,Bois,double,factor,E11_11,factor,no
+E11_12,Lampe rechargeable,double,factor,E11_12,factor,no
+E11_99,Autre,double,factor,E11_99,factor,no
+FAC1_1,REGR factor score   1 for analysis 1,double,numeric,FAC1_1,numeric,no
+FAC2_1,REGR factor score   2 for analysis 1,double,numeric,FAC2_1,numeric,no
+FAC3_1,REGR factor score   3 for analysis 1,double,numeric,FAC3_1,numeric,no
+FAC4_1,REGR factor score   4 for analysis 1,double,numeric,FAC4_1,numeric,no
+FAC5_1,REGR factor score   5 for analysis 1,double,numeric,FAC5_1,numeric,no
+FAC6_1,REGR factor score   6 for analysis 1,double,numeric,FAC6_1,numeric,no
+FAC7_1,REGR factor score   7 for analysis 1,double,numeric,FAC7_1,numeric,no
+FAC8_1,REGR factor score   8 for analysis 1,double,numeric,FAC8_1,numeric,no
+FAC9_1,REGR factor score   9 for analysis 1,double,numeric,FAC9_1,numeric,no
+FAC10_1,REGR factor score  10 for analysis 1,double,numeric,FAC10_1,numeric,no
+FAC11_1,REGR factor score  11 for analysis 1,double,numeric,FAC11_1,numeric,no
+FAC12_1,REGR factor score  12 for analysis 1,double,numeric,FAC12_1,numeric,no
+FAC13_1,REGR factor score  13 for analysis 1,double,numeric,FAC13_1,numeric,no
+FAC14_1,REGR factor score  14 for analysis 1,double,numeric,FAC14_1,numeric,no
+FAC15_1,REGR factor score  15 for analysis 1,double,numeric,FAC15_1,numeric,no
+FAC16_1,REGR factor score  16 for analysis 1,double,numeric,FAC16_1,numeric,no
+FAC17_1,REGR factor score  17 for analysis 1,double,numeric,FAC17_1,numeric,no
+FAC18_1,REGR factor score  18 for analysis 1,double,numeric,FAC18_1,numeric,no
+FAC19_1,REGR factor score  19 for analysis 1,double,numeric,FAC19_1,numeric,no
+FAC20_1,REGR factor score  20 for analysis 1,double,numeric,FAC20_1,numeric,no
+FAC21_1,REGR factor score  21 for analysis 1,double,numeric,FAC21_1,numeric,no
+FAC22_1,REGR factor score  22 for analysis 1,double,numeric,FAC22_1,numeric,no
+FAC23_1,REGR factor score  23 for analysis 1,double,numeric,FAC23_1,numeric,no
+FAC24_1,REGR factor score  24 for analysis 1,double,numeric,FAC24_1,numeric,no
+FAC25_1,REGR factor score  25 for analysis 1,double,numeric,FAC25_1,numeric,no
+FAC26_1,REGR factor score  26 for analysis 1,double,numeric,FAC26_1,numeric,no
+FAC27_1,REGR factor score  27 for analysis 1,double,numeric,FAC27_1,numeric,no
+FAC28_1,REGR factor score  28 for analysis 1,double,numeric,FAC28_1,numeric,no
+FAC29_1,REGR factor score  29 for analysis 1,double,numeric,FAC29_1,numeric,no
+FAC30_1,REGR factor score  30 for analysis 1,double,numeric,FAC30_1,numeric,no
+FAC31_1,REGR factor score  31 for analysis 1,double,numeric,FAC31_1,numeric,no
+FAC32_1,REGR factor score  32 for analysis 1,double,numeric,FAC32_1,numeric,no
+FAC33_1,REGR factor score  33 for analysis 1,double,numeric,FAC33_1,numeric,no
+FAC34_1,REGR factor score  34 for analysis 1,double,numeric,FAC34_1,numeric,no
+FAC35_1,REGR factor score  35 for analysis 1,double,numeric,FAC35_1,numeric,no
+FAC36_1,REGR factor score  36 for analysis 1,double,numeric,FAC36_1,numeric,no
+FAC37_1,REGR factor score  37 for analysis 1,double,numeric,FAC37_1,numeric,no
+FAC38_1,REGR factor score  38 for analysis 1,double,numeric,FAC38_1,numeric,no
+PROXY,NIVEAU DE VIE,double,numeric,PROXY,numeric,no
+RPROXY,Rank of PROXY,double,numeric,RPROXY,numeric,no
+NPROXY,NIVEAU DE VIE,double,factor,NPROXY,factor,no

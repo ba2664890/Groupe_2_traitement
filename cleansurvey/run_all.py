@@ -1,124 +1,98 @@
-"""
-run_all.py
-===========
-Orchestrateur du pipeline individus RGPH.
-
-Execute les etapes dans l'ordre :
-  1. Exploration et dictionnaire des variables
-  2. Selection et renommage
-  3. Nettoyage, derivation et QAQC
-
-Usage :
-    python cleansurvey/run_all.py
-    python cleansurvey/run_all.py --steps 2 3   # executer seulement les etapes 2 et 3
-    python cleansurvey/run_all.py --skip-explore  # sauter l'exploration si dict deja fait
-"""
-
+# Script maître d'exécution du pipeline de traitement des données
+import os
 import sys
-import time
-import argparse
-import pathlib
-import traceback
+import subprocess
+import logging
 
-# Path
-ROOT       = pathlib.Path(__file__).resolve().parent.parent
-SCRIPT_DIR = pathlib.Path(__file__).resolve().parent
+# Configuration du logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-sys.path.insert(0, str(SCRIPT_DIR))
+# Trouver le chemin de base du projet
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-STEPS = {
-    1: {
-        "nom"    : "Exploration et dictionnaire",
-        "module" : "1_data_exploration.1_get_initial_dict.2_1_get_ind_dict",
-        "func"   : None,
-    },
-    2: {
-        "nom"    : "Selection et renommage des variables",
-        "module" : "1_data_exploration.2_select_and_label.2_1_apply_ind_dict",
-        "func"   : "main",
-    },
-    3: {
-        "nom"    : "Nettoyage, derivation et QAQC",
-        "module" : "2_clean_and_merge.1_clean_hh_ind",
-        "func"   : "main",
-    },
-}
-
-
-def run_step(step_id: int):
-    """Execute une etape du pipeline."""
-    step = STEPS[step_id]
-    print(f"\n{'='*60}")
-    print(f"  ETAPE {step_id} : {step['nom']}")
-    print(f"{'='*60}")
-    t0 = time.time()
-
-    try:
-        import importlib
-        mod = importlib.import_module(step["module"].replace(".", ".").replace("1_data_exploration.", "1_data_exploration.").replace("2_clean_and_merge.", "2_clean_and_merge."))
-        if step["func"]:
-            getattr(mod, step["func"])()
-        else:
-            pass  # Le module s'execute a l'import (script autonome)
-
-        duree = round(time.time() - t0, 1)
-        print(f"\n  [OK] Etape {step_id} terminee en {duree}s")
-        return True
-
-    except Exception as e:
-        print(f"\n  [ERREUR] Etape {step_id} : {e}")
-        traceback.print_exc()
-        return False
-
+# Liste ordonnée des scripts à exécuter
+scripts = [
+    # 1. Extraction des dictionnaires initiaux (optionnel si déjà générés/remplis)
+    os.path.join(BASE_DIR, "1_data_exploration/1_get_initial_dict/1_get_hh_dict.py"),
+    os.path.join(BASE_DIR, "1_data_exploration/1_get_initial_dict/2_1_get_ind_dict.py"),
+    
+    # 2. Application des dictionnaires de variables et modalités INDIVIDUS
+    os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/2_1_apply_ind_dict.py"),
+    os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/2_2_apply_ind_dict.py"),
+    
+    # 3. Application des dictionnaires de variables MENAGES (utilise individus renommés)
+    os.path.join(BASE_DIR, "1_data_exploration/2_select_and_label/1_apply_hh_dict.py"),
+    
+    # 4. Nettoyage (standardisé pour les deux tables)
+    os.path.join(BASE_DIR, "2_clean_and_merge/1_clean_hh_ind.py"),
+    
+    # 5. Fusion (génère hh_final.csv et rgph5_merged.csv)
+    os.path.join(BASE_DIR, "2_clean_and_merge/2_merge_hh_ind.py"),
+    
+    # 6. Rapports QAQC finaux (Individus et Ménages)
+    os.path.join(BASE_DIR, "9_qaqc/1_qaqc_individus.py"),
+    os.path.join(BASE_DIR, "9_qaqc/2_qaqc_menage.py")
+]
 
 def main():
-    parser = argparse.ArgumentParser(description="Pipeline individus RGPH")
-    parser.add_argument(
-        "--steps", nargs="+", type=int, default=[1, 2, 3],
-        help="Etapes a executer (1=explore, 2=select, 3=clean)"
-    )
-    parser.add_argument(
-        "--skip-explore", action="store_true",
-        help="Sauter l'etape d'exploration (si dict deja produit)"
-    )
-    args = parser.parse_args()
-
-    steps_a_executer = args.steps
-    if args.skip_explore and 1 in steps_a_executer:
-        steps_a_executer = [s for s in steps_a_executer if s != 1]
-
-    print("=" * 60)
-    print("  PIPELINE INDIVIDUS - 10eme RGPH Senegal")
-    print("  Modules : Demographiques, Geographiques, Education")
-    print(f"  Etapes planifiees : {steps_a_executer}")
-    print("=" * 60)
-
-    t_global = time.time()
-    succes = []
-    echecs = []
-
-    for step_id in sorted(steps_a_executer):
-        if step_id not in STEPS:
-            print(f"  [WARN] Etape {step_id} inconnue, ignoree.")
+    logging.info("▶ Lancement du pipeline complet de traitement des données...")
+    
+    # 0. Nettoyage préalable des anciennes données et rapports
+    logging.info("▶ Nettoyage préalable des anciennes données et rapports...")
+    import glob
+    sys.path.append(BASE_DIR)
+    try:
+        from config import OUTPUT_DIR, AUX_DIR, QAQC_DIR
+        
+        # Supprimer les CSV intermédiaires/finaux dans data/
+        for f in glob.glob(os.path.join(OUTPUT_DIR, "*.csv")):
+            try:
+                os.remove(f)
+                logging.info(f"  Supprimé : {os.path.basename(f)}")
+            except Exception as e:
+                logging.warning(f"  Impossible de supprimer {f} : {e}")
+                
+        # Supprimer les dictionnaires initiaux et remplis dans aux_file/
+        for suffix in ["*_init.csv", "*_filled.csv"]:
+            for f in glob.glob(os.path.join(AUX_DIR, suffix)):
+                try:
+                    os.remove(f)
+                    logging.info(f"  Supprimé : {os.path.basename(f)}")
+                except Exception as e:
+                    logging.warning(f"  Impossible de supprimer {f} : {e}")
+                    
+        # Supprimer les anciens rapports QAQC
+        for f in glob.glob(os.path.join(QAQC_DIR, "*")):
+            try:
+                os.remove(f)
+                logging.info(f"  Supprimé : {os.path.basename(f)}")
+            except Exception as e:
+                logging.warning(f"  Impossible de supprimer {f} : {e}")
+    except Exception as e:
+        logging.warning(f" Erreur lors du nettoyage initial : {e}")
+        
+    for script in scripts:
+        if not os.path.exists(script):
+            logging.warning(f" Script introuvable : {script} - Étape ignorée.")
             continue
-        ok = run_step(step_id)
-        if ok:
-            succes.append(step_id)
-        else:
-            echecs.append(step_id)
-            print(f"  [STOP] Arret apres echec de l'etape {step_id}")
-            break
-
-    duree_totale = round(time.time() - t_global, 1)
-    print(f"\n{'='*60}")
-    print(f"  BILAN : {len(succes)} etape(s) reussie(s), {len(echecs)} echec(s)")
-    print(f"  Duree totale : {duree_totale}s")
-    if echecs:
-        print(f"  Etapes en echec : {echecs}")
-    else:
-        print("  Pipeline termine avec succes !")
-    print("=" * 60)
-
+            
+        logging.info(f"▶ Exécution de : {os.path.basename(script)}")
+        try:
+            # Exécuter en tant que sous-processus avec le même interpréteur Python
+            result = subprocess.run(
+                [sys.executable, script],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+            print(result.stdout)
+        except subprocess.CalledProcessError as e:
+            logging.error(f" Erreur lors de l'exécution de {os.path.basename(script)}:")
+            print(e.stderr)
+            sys.exit(1)
+            
+    logging.info(" Pipeline exécuté avec succès. Tous les rapports et données nettoyées sont dans le dossier 'data/'.")
 
 if __name__ == "__main__":
     main()
